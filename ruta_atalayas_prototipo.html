@@ -1,0 +1,418 @@
+<title>ASEFULL Ruta Atalayas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500;8..144,700;8..144,800&display=swap">
+<style>
+/* Layout: teléfono a la izquierda con la app, notas para la profe a la derecha (abajo en celular) */
+:root{
+  --mag:#E91E8C; --az:#00ADEF; --ok:#2E9E5B; --no:#8A8A96; --red:#E53935;
+  --bg:#EEF0F4; --phone:#FFFFFF; --ink:#1B1C22; --mut:#666A78; --line:#E2E4EA;
+  --map:#F4F1EA; --block:#E9E6DD; --st-main:#FFFFFF; --st-main-edge:#C9C3B4; --st-norm:#FFFFFF; --st-pas:#D7D2C4;
+  --sheet:#FFFFFF; --chip:#F2F3F6; --route:#00ADEF; --route-case:#FFFFFF;
+  --f:"Roboto Flex",Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121318; --phone:#1B1C22; --ink:#ECEDF2; --mut:#A2A5B4; --line:#2E3038;
+  --map:#23252C; --block:#2A2C34; --st-main:#5A5D6A; --st-main-edge:#3A3C45; --st-norm:#474A55; --st-pas:#383A43;
+  --sheet:#1F2027; --chip:#2A2C34; --route:#33BDF2; --route-case:#1B1C22; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#121318; --phone:#1B1C22; --ink:#ECEDF2; --mut:#A2A5B4; --line:#2E3038;
+  --map:#23252C; --block:#2A2C34; --st-main:#5A5D6A; --st-main-edge:#3A3C45; --st-norm:#474A55; --st-pas:#383A43;
+  --sheet:#1F2027; --chip:#2A2C34; --route:#33BDF2; --route-case:#1B1C22; color-scheme:dark }
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:14px;margin:0}
+.wrap{display:grid;grid-template-columns:minmax(0,410px) minmax(0,1fr);gap:32px;max-width:1080px;margin:0 auto;padding-block:24px;padding-inline:16px;align-items:start}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr);justify-items:center}.notas{max-width:410px}}
+.phone{width:100%;max-width:410px;background:var(--phone);border-radius:28px;overflow:hidden;box-shadow:0 10px 40px #0002, 0 0 0 1px var(--line);display:flex;flex-direction:column;height:800px;position:relative}
+.bar{background:var(--mag);color:#fff;padding:14px 16px 0}
+.bar h1{font-size:17px;margin:0;font-weight:700}
+.bar p{margin:2px 0 10px;font-size:12px;opacity:.9}
+.tabs{display:flex;gap:4px}
+.tabs button{flex:1;background:transparent;border:0;color:#fff;opacity:.75;font:500 14px var(--f);padding:10px 0;border-bottom:3px solid transparent;cursor:pointer}
+.tabs button[aria-selected="true"]{opacity:1;border-color:#fff}
+.vista{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
+/* mapa */
+.mapa{position:relative;height:340px;flex:none;background:var(--map);touch-action:none;overflow:hidden}
+.mapa svg{width:100%;height:100%;display:block;cursor:grab}
+.mapa.trancon svg{cursor:crosshair}
+.ctl{position:absolute;display:flex;gap:6px}
+.ctl.top{top:10px;left:10px;right:10px;justify-content:space-between;flex-wrap:wrap}
+.ctl.der{right:10px;bottom:10px;flex-direction:column}
+.seg{display:flex;background:var(--sheet);border-radius:20px;padding:3px;box-shadow:0 2px 8px #0002}
+.seg button{border:0;background:transparent;color:var(--ink);font:500 12px var(--f);padding:6px 10px;border-radius:16px;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--mag);color:#fff}
+.fab{width:36px;height:36px;border-radius:50%;border:0;background:var(--sheet);color:var(--ink);box-shadow:0 2px 8px #0002;font:700 16px var(--f);cursor:pointer}
+.fab[aria-pressed="true"]{background:var(--red);color:#fff}
+.aviso{position:absolute;left:10px;right:10px;bottom:10px;background:var(--ink);color:var(--phone);font-size:12px;padding:8px 10px;border-radius:10px;opacity:0;transition:opacity .25s;pointer-events:none;margin-right:46px}
+.aviso.on{opacity:1}
+/* hoja inferior */
+.hoja{flex:1;min-height:0;overflow:auto;background:var(--sheet);border-radius:18px 18px 0 0;margin-top:-14px;position:relative;box-shadow:0 -4px 16px #0001;padding:8px 16px 16px}
+.asa{width:36px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 10px}
+.res{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.res b{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
+.res span{color:var(--mut);font-variant-numeric:tabular-nums}
+.comp{margin:8px 0 12px;background:var(--chip);border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:13px;font-variant-numeric:tabular-nums}
+.comp .baja{color:var(--ok);font-weight:700}
+.acc{display:flex;gap:8px;margin-bottom:12px}
+.btn{flex:1;border:0;border-radius:12px;padding:11px 10px;font:600 14px var(--f);cursor:pointer;background:var(--chip);color:var(--az)}
+.btn.pri{background:var(--az);color:#fff}
+.btn.mag{background:var(--mag);color:#fff}
+h3{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin:14px 0 6px;font-weight:600}
+ol.paradas{list-style:none;margin:0;padding:0}
+ol.paradas li{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.num{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#fff;font:700 12px var(--f);background:var(--az)}
+.num.ok{background:var(--ok)} .num.no{background:var(--no)} .num.sig{background:var(--mag)}
+.pn{font-weight:500;min-width:0} .pn small{display:block;color:var(--mut);font-weight:400;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pk{color:var(--mut);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sinub{font-size:12px;color:var(--mut);line-height:1.5}
+/* ficha */
+.ficha{position:absolute;inset:auto 0 0 0;max-height:78%;background:var(--sheet);border-radius:18px 18px 0 0;box-shadow:0 -8px 30px #0004;padding:10px 16px 16px;overflow:auto;transform:translateY(105%);transition:transform .25s ease;z-index:5}
+.ficha.on{transform:none}
+.fcab{display:flex;justify-content:space-between;align-items:start;gap:10px}
+.fcab h2{margin:4px 0 2px;font-size:19px}
+.fcab p{margin:0;color:var(--mut);font-size:13px}
+.cerrar{border:0;background:var(--chip);color:var(--ink);width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;flex:none}
+.cli{border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:10px}
+.cli.ok{border-color:var(--ok)} .cli.no{opacity:.6}
+.cli h4{margin:0 0 4px;font-size:16px;display:flex;justify-content:space-between;gap:8px}
+.est{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;background:var(--chip);color:var(--mut);white-space:nowrap}
+.est.ok{background:#E3F4EA;color:var(--ok)} .est.no{background:var(--chip);color:var(--no)}
+.dato{font-size:13px;color:var(--mut);margin:2px 0}
+.deuda{font-weight:700;color:var(--red)} .deuda.cero{color:var(--ok)}
+.tres{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px;margin-top:10px}
+.tres button{border:0;border-radius:10px;padding:10px 0;font:700 15px var(--f);cursor:pointer;color:#fff}
+.b-ok{background:#9E9E9E}.b-no{background:#F44336}.b-ven{background:#FF9800;font-size:13px!important}
+/* clientes */
+.lista{flex:1;overflow:auto;padding:12px 16px}
+.buscar{width:100%;border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:12px;padding:11px 12px;font:15px var(--f);margin-bottom:6px}
+.nota-tab{font-size:12px;color:var(--mut);margin:0 0 8px}
+.toast{position:absolute;left:16px;right:16px;bottom:16px;background:var(--ink);color:var(--phone);padding:10px 12px;border-radius:10px;font-size:13px;z-index:9;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+/* notas */
+.notas{line-height:1.55;max-width:62ch}
+.notas h2{font-size:24px;margin:4px 0 6px;text-wrap:balance}
+.notas .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mag);font-weight:700}
+.notas h3{color:var(--ink);font-size:15px;text-transform:none;letter-spacing:0;margin:22px 0 6px}
+.notas ul{padding-left:18px;margin:6px 0}
+.notas li{margin:4px 0}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:8px;margin-right:4px}
+.tag.real{background:#E3F4EA;color:var(--ok)} .tag.sim{background:#FDE6F2;color:var(--mag)}
+.leyenda{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:12px;color:var(--mut);margin-top:8px}
+.leyenda i{display:inline-block;width:22px;height:0;border-top:4px solid;vertical-align:middle;margin-right:6px}
+button:focus-visible,input:focus-visible{outline:2px solid var(--az);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+ <div class="phone" id="phone">
+  <div class="bar">
+   <h1>Ruta Atalayas Sábado</h1>
+   <p id="sub">Vendedor · 48 clientes · sale de la bodega Cra 87I #69 Sur-34</p>
+   <div class="tabs" role="tablist">
+    <button role="tab" id="tRuta" aria-selected="true">Ruta</button>
+    <button role="tab" id="tCli" aria-selected="false">Clientes</button>
+   </div>
+  </div>
+
+  <div class="vista" id="vRuta">
+   <div class="mapa" id="mapa">
+    <svg id="svg" aria-label="Mapa esquemático de la ruta"></svg>
+    <div class="ctl top">
+     <div class="seg" role="group" aria-label="Vehículo">
+      <button id="vElec" aria-pressed="true">⚡ Eléctrico</button><button id="vPedal" aria-pressed="false">🚲 Pedal</button>
+     </div>
+     <div class="seg" role="group" aria-label="Orden">
+      <button id="oApp" aria-pressed="false">Orden app</button><button id="oOpt" aria-pressed="true">Optimizada</button>
+     </div>
+    </div>
+    <div class="ctl der">
+     <button class="fab" id="zIn" aria-label="Acercar">+</button>
+     <button class="fab" id="zOut" aria-label="Alejar">−</button>
+     <button class="fab" id="zFit" aria-label="Ver toda la ruta">⤢</button>
+     <button class="fab" id="mTran" aria-pressed="false" aria-label="Marcar trancón" title="Marcar trancón: toca una calle">!</button>
+    </div>
+    <div class="aviso" id="aviso"></div>
+   </div>
+   <div class="hoja">
+    <div class="asa"></div>
+    <div class="res"><b id="rKm">–</b><span id="rDet">–</span></div>
+    <div class="comp" id="comp"></div>
+    <div class="acc">
+     <button class="btn mag" id="bSim">Simular trancón</button>
+     <button class="btn" id="bReset">Reiniciar ruta</button>
+    </div>
+    <h3 id="hPar">Paradas</h3>
+    <ol class="paradas" id="paradas"></ol>
+    <h3>Sin ubicación (no entran a la ruta)</h3>
+    <p class="sinub" id="sinub"></p>
+   </div>
+  </div>
+
+  <div class="vista" id="vCli" hidden>
+   <div class="lista">
+    <input class="buscar" id="q" placeholder="Buscar cliente o dirección" autocomplete="off">
+    <p class="nota-tab">Consulta entre semana: cuenta del cliente sin abrir el mapa.</p>
+    <ol class="paradas" id="clientes"></ol>
+   </div>
+  </div>
+
+  <div class="ficha" id="ficha" role="dialog" aria-modal="false" aria-labelledby="fTit">
+   <div class="asa"></div>
+   <div class="fcab"><div><h2 id="fTit"></h2><p id="fSub"></p></div><button class="cerrar" id="fX" aria-label="Cerrar">✕</button></div>
+   <div id="fCli"></div>
+  </div>
+  <div class="toast" id="toast"></div>
+ </div>
+
+ <section class="notas">
+  <div class="eyebrow">Proyecto de Aula · Cálculo Multivariado y Backend</div>
+  <h2>Prototipo funcional: modo ruta de la app ASEFULL</h2>
+  <p>Simula la pantalla que usaría el vendedor el sábado en la ruta Atalayas. Calcula el recorrido por las calles según el triciclo, lo recalcula si hay un trancón y permite marcar a cada cliente como atendido (✓) o no estaba (✗).</p>
+  <h3>Cómo probarlo</h3>
+  <ul>
+   <li>Cambie entre <b>⚡ Eléctrico</b> y <b>🚲 Pedal</b>: el eléctrico (grande) evita los pasajes y deja al vendedor a pie el último tramo; el de pedal entra por todas las cuadras.</li>
+   <li>Compare <b>Orden app</b> (el orden que hoy está guardado) con <b>Optimizada</b>.</li>
+   <li>Toque <b>Simular trancón</b>, o active <b>!</b> y toque cualquier calle: la ruta se recalcula para evitarla.</li>
+   <li>Toque una parada: aparecen sus clientes con deuda y última compra. En un conjunto salen todos los clientes juntos.</li>
+   <li>Marque ✓ o ✗: la ruta restante se recalcula desde esa parada.</li>
+   <li>Pestaña <b>Clientes</b>: buscar la cuenta de un cliente entre semana sin usar el mapa.</li>
+  </ul>
+  <div class="leyenda"><span><i style="border-color:var(--st-main-edge)"></i>Vía principal</span><span><i style="border-color:var(--st-norm);border-top-width:3px"></i>Calle</span><span><i style="border-color:var(--st-pas);border-top-style:dashed;border-top-width:2px"></i>Pasaje / cuadra</span><span><i style="border-color:var(--route)"></i>Ruta</span><span><i style="border-color:var(--red)"></i>Trancón</span></div>
+  <h3>Qué es real y qué es simulado</h3>
+  <ul>
+   <li><span class="tag real">Real</span>Los 48 clientes de la ruta, su orden en la app, direcciones, deudas y última compra (reporte del 03/10/2026).</li>
+   <li><span class="tag sim">Simulado</span>Las calles se dibujan a partir de la nomenclatura de Bogotá (calles Sur y carreras), no de un mapa real. Las vías principales son de ejemplo.</li>
+   <li><span class="tag sim">Simulado</span>Las ubicaciones de clientes sin dirección completa son estimadas. 6 clientes sin ningún dato quedan por fuera.</li>
+   <li><span class="tag sim">Simulado</span>El trancón lo marca el usuario. En la versión final el tráfico vendría de Google Maps.</li>
+  </ul>
+  <h3>Qué calcula por dentro</h3>
+  <ul>
+   <li>Las calles son un grafo: cada esquina es un nodo y cada cuadra una arista con su largo. Cada vehículo tiene un costo distinto por tipo de calle, y un trancón multiplica el costo de esa cuadra.</li>
+   <li>Entre cada par de paradas se busca el camino más barato con <b>Dijkstra</b>.</li>
+   <li>El orden se calcula con <b>vecino más cercano + 2-opt</b> sobre esas distancias por calle.</li>
+   <li>En el backend, con coordenadas reales, la distancia base es <b>Haversine</b>, una función de 4 variables; el resultado viaja a la app en <b>JSON</b> desde un servicio <b>PHP</b>.</li>
+  </ul>
+  <h3>Siguiente paso</h3>
+  <p>Cambiar este mapa esquemático por el mapa real de OpenStreetMap (osmdroid en Android), calcular las rutas por calles con perfiles de carro y bicicleta (OpenRouteService) y abrir cada tramo en Google Maps cuando se necesite el tráfico en vivo.</p>
+ </section>
+</div>
+
+<script>
+const CLIENTES = [{"o": 1, "n": "Guillermo G.", "d": "tienda", "C": null, "K": null, "est": "sin_dato", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 2, "n": "Camilo", "d": "calle000", "C": null, "K": null, "est": "sin_dato", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 3, "n": "Alba", "d": "Calle 69 C Sur #89-21", "C": 69.75, "K": 89.21, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 4, "n": "Sandra", "d": "Kr 91 - 63 Sur", "C": 63.3, "K": 91.0, "est": "dir_incompleta", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 5, "n": "Sara R.", "d": "0000", "C": null, "K": null, "est": "sin_dato", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 6, "n": "Viviana P.", "d": "Cll 64 s#91-61", "C": 64.0, "K": 91.61, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 7, "n": "Martha", "d": "Cll 64 S # 91 -62", "C": 64.02, "K": 91.62, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 8, "n": "Derly", "d": "000", "C": 64.0, "K": 91.6, "est": "est_hora", "deuda": 2000, "v": {"f": "03/10", "h": "12:32", "met": "Efectivo", "tot": 0, "pag": 2000}, "p": [], "g": null}, {"o": 9, "n": "Mariela", "d": "Cll 64 S # 91-", "C": 64.0, "K": 91.3, "est": "dir_incompleta", "deuda": 6000, "v": {"f": "03/10", "h": "12:31", "met": "Efectivo", "tot": 6000, "pag": 2000}, "p": ["Ambientador Spray x1"], "g": null}, {"o": 10, "n": "Manuel Bicis", "d": "Cll 64 S # 91-", "C": 64.0, "K": 91.4, "est": "dir_incompleta", "deuda": 90000, "v": null, "p": [], "g": null}, {"o": 11, "n": "Clara I.", "d": "Cll 62 S #91-52", "C": 62.0, "K": 91.52, "est": "dir", "deuda": 22000, "v": null, "p": [], "g": null}, {"o": 12, "n": "Yuber", "d": "Cll 62C Sur #91.52", "C": 62.75, "K": 91.52, "est": "dir_dudosa", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 13, "n": "Brayan M.", "d": "Cll 62 C sur #91-90", "C": 62.75, "K": 91.9, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 14, "n": "Sandra", "d": "Kr 92 # 62-33", "C": 62.33, "K": 92.0, "est": "dir_sin_sur", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 15, "n": "Mari", "d": "Cll 62 B Sur #91-", "C": 62.5, "K": 91.3, "est": "dir_incompleta", "deuda": 39000, "v": {"f": "03/10", "h": "12:44", "met": "Efectivo", "tot": 17000, "pag": 20000}, "p": ["Limpiador de pisos x2", "Blanqueador x1"], "g": null}, {"o": 16, "n": "Liz", "d": "Calle 000", "C": 62.5, "K": 91.5, "est": "est_hora", "deuda": 36000, "v": {"f": "03/10", "h": "12:44", "met": "Nequi", "tot": 5000, "pag": 30000}, "p": ["Blanqueador x1"], "g": null}, {"o": 17, "n": "Esperanza", "d": "Cll 62 B S #91-", "C": 62.5, "K": 91.4, "est": "dir_incompleta", "deuda": 27000, "v": null, "p": [], "g": null}, {"o": 18, "n": "Iris A.", "d": "Cll 62 B S #91-", "C": 62.5, "K": 91.7, "est": "dir_incompleta", "deuda": 29000, "v": {"f": "03/10", "h": "12:48", "met": "Efectivo", "tot": 21000, "pag": 10000}, "p": ["Desengrasante x1", "Limpiador de pisos x1", "Ambientador Spray x1"], "g": null}, {"o": 19, "n": "Diana L.", "d": "Kr 92 # 62A -17", "C": 62.42, "K": 92.0, "est": "dir_sin_sur", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 20, "n": "Jhonny", "d": "Cll 62 B S # 91A -67", "C": 62.5, "K": 91.77, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 21, "n": "Maribel", "d": "calle 0000", "C": 62.25, "K": 92.5, "est": "est_hora", "deuda": 20000, "v": {"f": "03/10", "h": "12:57", "met": "Efectivo", "tot": 13000, "pag": 5000}, "p": ["Jabon De Ropa x1"], "g": null}, {"o": 22, "n": "Natalia", "d": "00", "C": 62.25, "K": 92.7, "est": "est_hora", "deuda": 16000, "v": {"f": "03/10", "h": "12:57", "met": "Efectivo", "tot": 6000, "pag": 0}, "p": ["Ambientador Spray x1"], "g": null}, {"o": 23, "n": "Angie R.", "d": "kr 97b N 61-99", "C": 61.99, "K": 97.2, "est": "dir_sin_sur", "deuda": 6000, "v": null, "p": [], "g": null}, {"o": 24, "n": "Disney", "d": "calle 000", "C": 62.25, "K": 94.0, "est": "est_hora", "deuda": 0, "v": {"f": "03/10", "h": "13:00", "met": "Efectivo", "tot": 6000, "pag": 6000}, "p": ["Limpiador de pisos x1"], "g": null}, {"o": 25, "n": "Rocío", "d": "Cll 62 A S 98 A -33", "C": 62.25, "K": 98.43, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 26, "n": "Elena", "d": "Kr98b- 61 A - 30", "C": 61.55, "K": 98.2, "est": "dir_sin_sur", "deuda": 24000, "v": null, "p": [], "g": null}, {"o": 27, "n": "Rosalba", "d": "Cll 62 A Sur # 112 - 48", "C": null, "K": null, "est": "dir_dudosa", "deuda": 18000, "v": null, "p": [], "g": null}, {"o": 28, "n": "Amanda", "d": "Cl 62 A Sur # 98B 20", "C": 62.25, "K": 98.4, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 29, "n": "Don Leo", "d": "Casa 239", "C": null, "K": null, "est": "sin_dato", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 30, "n": "Aleida", "d": "Casa 156 (Santa Monica 1)", "C": 63.0, "K": 100.0, "est": "est_sector", "deuda": 7000, "v": {"f": "03/10", "h": "13:26", "met": "Efectivo", "tot": 7000, "pag": 0}, "p": ["Desengrasante x1"], "g": "Santa Mónica 1"}, {"o": 31, "n": "Empanadas", "d": "Santa Monica 1", "C": 63.05, "K": 100.05, "est": "est_sector", "deuda": 0, "v": null, "p": [], "g": "Santa Mónica 1"}, {"o": 32, "n": "María Eugenia", "d": "nueva ciudad", "C": 66.0, "K": 97.0, "est": "est_sector", "deuda": 4000, "v": {"f": "03/10", "h": "13:43", "met": "Nequi", "tot": 0, "pag": 7000}, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 33, "n": "Angie D.", "d": "nueva ciudad 3", "C": 66.05, "K": 97.0, "est": "est_sector", "deuda": 0, "v": null, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 34, "n": "Luz S.", "d": "Nueva ciudad 3", "C": 66.0, "K": 97.1, "est": "est_sector", "deuda": 9000, "v": {"f": "03/10", "h": "13:45", "met": "Efectivo", "tot": 9000, "pag": 13000}, "p": ["Jabón de Manos x1"], "g": "Conjunto Nueva Ciudad 3"}, {"o": 35, "n": "Paisita", "d": "Nueva ciudad 3", "C": 66.05, "K": 97.1, "est": "est_sector", "deuda": 36000, "v": {"f": "03/10", "h": "13:46", "met": "Efectivo", "tot": 0, "pag": 10000}, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 36, "n": "Sandra", "d": "Nueva ciudad 3", "C": 66.1, "K": 97.15, "est": "est_sector", "deuda": 7000, "v": null, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 37, "n": "Jenny", "d": "nueva ciudad 3", "C": 66.15, "K": 97.1, "est": "est_sector", "deuda": 9000, "v": {"f": "03/10", "h": "14:02", "met": "Efectivo", "tot": 9000, "pag": 0}, "p": ["Jabón de Manos x1"], "g": "Conjunto Nueva Ciudad 3"}, {"o": 38, "n": "Rosalba", "d": "Nueva ciudad 3", "C": 66.15, "K": 97.2, "est": "est_sector", "deuda": 25000, "v": {"f": "03/10", "h": "14:03", "met": "Efectivo", "tot": 6000, "pag": 0}, "p": ["Limpiador de pisos x1"], "g": "Conjunto Nueva Ciudad 3"}, {"o": 39, "n": "Leidi", "d": "nueva ciudad etapa 3", "C": 66.2, "K": 97.2, "est": "est_sector", "deuda": 0, "v": null, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 40, "n": "Lucía", "d": "Nueva ciudad 3", "C": 66.1, "K": 97.0, "est": "est_sector", "deuda": 3000, "v": {"f": "03/10", "h": "13:53", "met": "Efectivo", "tot": 0, "pag": 10000}, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 41, "n": "Aldair", "d": "Nueva ciudad 3", "C": 66.2, "K": 97.05, "est": "est_sector", "deuda": 2000, "v": null, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 42, "n": "Dayana", "d": "Arepas", "C": 68.0, "K": 93.0, "est": "est_sector", "deuda": 32000, "v": {"f": "03/10", "h": "14:10", "met": "Efectivo", "tot": 33000, "pag": 25000}, "p": ["Jabon De Ropa x1", "Suavizante x1", "Ambientador Spray x1", "Ropa Color x1"], "g": "Arepas"}, {"o": 43, "n": "Flor", "d": "Renacer esquina", "C": null, "K": null, "est": "sin_dato", "deuda": 3000, "v": null, "p": [], "g": null}, {"o": 44, "n": "Paola", "d": "Arepas", "C": 68.0, "K": 93.1, "est": "est_sector", "deuda": 20000, "v": {"f": "03/10", "h": "14:14", "met": "Nequi", "tot": 0, "pag": 15000}, "p": [], "g": "Arepas"}, {"o": 45, "n": "Jazmín (mamá)", "d": "Cll 70 S #88 C-23", "C": 70.0, "K": 88.53, "est": "dir", "deuda": 3000, "v": null, "p": [], "g": "Cll 70 S #88C-23"}, {"o": 46, "n": "Tania (hija)", "d": "Cll 70 S # 88 C-23", "C": 70.0, "K": 88.54, "est": "dir", "deuda": 12000, "v": null, "p": [], "g": "Cll 70 S #88C-23"}, {"o": 47, "n": "Paisita Ultima", "d": "Cll 69 A sur # 3- 03", "C": 69.25, "K": 93.03, "est": "dir_dudosa", "deuda": 0, "v": {"f": "03/10", "h": "14:28", "met": "Efectivo", "tot": 0, "pag": 6000}, "p": [], "g": null}, {"o": 48, "n": "Mia", "d": "0000", "C": 70.0, "K": 89.5, "est": "est_hora", "deuda": 39000, "v": {"f": "03/10", "h": "14:39", "met": "Efectivo", "tot": 39000, "pag": 0}, "p": ["Jabon De Ropa x1", "Ambientador Spray x1", "Ambientador Spray x2", "Suavizante x1"], "g": null}];
+// ---------- red de calles (nomenclatura) ----------
+const C0=60.5, C1=71, K0=87, K1=101, PASO=0.5, UKM=0.1; // 1 número de calle/carrera ≈ 100 m
+const MAIN_C=[63,66,69], MAIN_K=[88,92,97];
+const Cs=[],Ks=[]; for(let c=C0;c<=C1+1e-9;c+=PASO)Cs.push(+c.toFixed(2)); for(let k=K0;k<=K1+1e-9;k+=PASO)Ks.push(+k.toFixed(2));
+const nC=Cs.length,nK=Ks.length,NN=nC*nK, id=(i,j)=>i*nK+j;
+const X=K=>(K1-K)*10, Y=C=>(C-C0)*10; // pantalla: este a la derecha, sur hacia abajo
+const esEnt=v=>Math.abs(v-Math.round(v))<1e-9;
+const edges=[]; const adj=Array.from({length:NN},()=>[]);
+function clase(fijo, ent){ if(!ent) return 'pas'; return fijo?'main':'norm'; }
+for(let i=0;i<nC;i++)for(let j=0;j<nK;j++){
+  if(j+1<nK){ // a lo largo de una calle (C fijo)
+    const c=Cs[i]; const e={a:id(i,j),b:id(i,j+1),cl:clase(MAIN_C.includes(c),esEnt(c)),nom:(esEnt(c)?'Calle '+c+' Sur':'Pasaje calle '+c+' Sur'),len:PASO*UKM,t:false};
+    e.k=edges.length; edges.push(e); adj[e.a].push(e); adj[e.b].push(e) }
+  if(i+1<nC){ // a lo largo de una carrera (K fijo)
+    const k=Ks[j]; const e={a:id(i,j),b:id(i+1,j),cl:clase(MAIN_K.includes(k),esEnt(k)),nom:(esEnt(k)?'Carrera '+k:'Pasaje carrera '+k),len:PASO*UKM,t:false};
+    e.k=edges.length; edges.push(e); adj[e.a].push(e); adj[e.b].push(e) }
+}
+const nodoXY=n=>[X(Ks[n%nK]),Y(Cs[Math.floor(n/nK)])];
+const VEH={elec:{nom:'Eléctrico',vel:15,f:{main:1,norm:1.6,pas:Infinity}},pedal:{nom:'Pedal',vel:9,f:{main:1.15,norm:1,pas:1}}};
+const F_TRANCON=8, VEL_PIE=4.5;
+
+// ---------- paradas (clientes agrupados por conjunto o misma dirección) ----------
+const paradas=[{id:0,nom:'Bodega',sub:'Cra 87I #69 Sur-34',C:69.34,K:87.9,cl:[],bodega:true}];
+const sinUb=[];
+CLIENTES.forEach(c=>{ if(c.C==null){sinUb.push(c);return}
+  const key=c.g||(c.C.toFixed(2)+'|'+c.K.toFixed(2));
+  let p=paradas.find(p=>p.key===key);
+  if(!p){p={id:paradas.length,key,nom:c.g||c.n,sub:c.g?'':c.d,cl:[],C:0,K:0};paradas.push(p)}
+  p.cl.push(c) });
+paradas.forEach(p=>{ if(p.bodega)return; p.C=p.cl.reduce((s,c)=>s+c.C,0)/p.cl.length; p.K=p.cl.reduce((s,c)=>s+c.K,0)/p.cl.length;
+  if(p.cl.length>1&&!p.cl[0].g) p.nom=p.cl.map(c=>c.n).join(' y '); p.ordenApp=Math.min(...p.cl.map(c=>c.o)); });
+const estado={}; // o -> 'ok' | 'no'
+const paradaHecha=p=>!p.bodega&&p.cl.every(c=>estado[c.o]);
+
+// acceso de cada parada a la red: el eléctrico se queda en una esquina de calles normales y el vendedor sigue a pie
+function acceso(p,veh){ let best=null,bd=1e9;
+  for(let i=0;i<nC;i++)for(let j=0;j<nK;j++){ if(veh==='elec'&&!(esEnt(Cs[i])||esEnt(Ks[j]))) continue;
+    const d=Math.hypot(Cs[i]-p.C,Ks[j]-p.K); if(d<bd){bd=d;best=id(i,j)} }
+  return {n:best,km:bd*UKM} }
+
+function dijkstra(src,veh){ const f=VEH[veh].f; const dist=new Float64Array(NN).fill(Infinity), km=new Float64Array(NN), prev=new Int32Array(NN).fill(-1), vis=new Uint8Array(NN);
+  dist[src]=0;
+  for(let it=0;it<NN;it++){ let u=-1,bd=Infinity; for(let v=0;v<NN;v++) if(!vis[v]&&dist[v]<bd){bd=dist[v];u=v} if(u<0)break; vis[u]=1;
+    for(const e of adj[u]){ const w=e.len*f[e.cl]*(e.t?F_TRANCON:1); if(!isFinite(w))continue; const v=e.a===u?e.b:e.a;
+      if(dist[u]+w<dist[v]){dist[v]=dist[u]+w;km[v]=km[u]+e.len;prev[v]=u} } }
+  return {dist,km,prev} }
+
+let veh='elec', modo='opt', marcando=false;
+let calc=null;
+function calcular(){
+  const ps=paradas; const acc=ps.map(p=>acceso(p,veh));
+  const D=ps.map((p,a)=>dijkstra(acc[a].n,veh));
+  const pie=veh==='elec';
+  const costo=(a,b)=>{ if(a===b)return 0; const d=D[a].dist[acc[b].n]; return d+acc[a].km+acc[b].km };
+  const km=(a,b)=>D[a].km[acc[b].n]+(pie?0:acc[a].km+acc[b].km);
+  const kmPie=(a,b)=>pie?acc[a].km+acc[b].km:0;
+  const camino=(a,b)=>{ const out=[]; let v=acc[b].n; while(v!==-1){out.push(v); if(v===acc[a].n)break; v=D[a].prev[v]} return out.reverse() };
+  calc={acc,costo,km,kmPie,camino};
+}
+function largo(seq){ let c=0,k=0,p=0; for(let i=0;i<seq.length-1;i++){c+=calc.costo(seq[i],seq[i+1]);k+=calc.km(seq[i],seq[i+1]);p+=calc.kmPie(seq[i],seq[i+1])} return {c,k,p} }
+function optimizar(inicio,pend){ // vecino más cercano + 2-opt, ruta cerrada que vuelve a la bodega
+  let cur=inicio, rest=pend.slice(), ord=[];
+  while(rest.length){ let j=0; for(let i=1;i<rest.length;i++) if(calc.costo(cur,rest[i])<calc.costo(cur,rest[j])) j=i; ord.push(rest[j]); cur=rest[j]; rest.splice(j,1) }
+  const tot=o=>largo([inicio,...o,0]).c; let mejora=true, guard=0;
+  while(mejora&&guard++<60){ mejora=false; for(let i=0;i<ord.length-1;i++)for(let k=i+1;k<ord.length;k++){ const n=ord.slice(0,i).concat(ord.slice(i,k+1).reverse(),ord.slice(k+1)); if(tot(n)<tot(ord)-1e-9){ord=n;mejora=true} } }
+  return ord }
+let ultimo=0; // última parada atendida (de donde sale la ruta restante)
+function rutaActual(){
+  const pend=paradas.filter(p=>!p.bodega&&!paradaHecha(p)).map(p=>p.id);
+  const app=pend.slice().sort((a,b)=>paradas[a].ordenApp-paradas[b].ordenApp);
+  const opt=optimizar(ultimo,pend);
+  return {app,opt,ord:modo==='opt'?opt:app} }
+
+// ---------- dibujo ----------
+const svg=document.getElementById('svg'), NS='http://www.w3.org/2000/svg';
+const W=X(K0)-X(K1), H=Y(C1)-Y(C0); let vb={x:-4,y:-4,w:W+8,h:H+8};
+function el(t,a,p){const e=document.createElementNS(NS,t); for(const k in a)e.setAttribute(k,a[k]); (p||svg).appendChild(e); return e}
+let gCalles,gTr,gRuta,gPar,gEtq,ruta;
+function dibujarBase(){ svg.innerHTML='';
+  el('rect',{x:-10,y:-10,width:W+20,height:H+20,fill:'var(--map)'});
+  gCalles=el('g',{}); gTr=el('g',{}); gRuta=el('g',{}); gEtq=el('g',{}); gPar=el('g',{});
+  // manzanas (fondo suave entre calles normales)
+  for(let c=Math.ceil(C0);c<C1;c++)for(let k=K0;k<K1;k++) el('rect',{x:X(k+1)+.6,y:Y(c)+.6,width:8.8,height:8.8,rx:1,fill:'var(--block)'},gCalles);
+  const orden={pas:0,norm:1,main:2};
+  edges.slice().sort((a,b)=>orden[a.cl]-orden[b.cl]).forEach(e=>{ const [x1,y1]=nodoXY(e.a),[x2,y2]=nodoXY(e.b);
+    if(e.cl==='main') el('line',{x1,y1,x2,y2,stroke:'var(--st-main-edge)','stroke-width':2.6,'stroke-linecap':'round'},gCalles);
+    el('line',{x1,y1,x2,y2,stroke:e.cl==='pas'?'var(--st-pas)':(e.cl==='main'?'var(--st-main)':'var(--st-norm)'),'stroke-width':e.cl==='main'?1.9:(e.cl==='norm'?1.1:.5),'stroke-dasharray':e.cl==='pas'?'1 .8':'none','stroke-linecap':'round'},gCalles);
+    const hit=el('line',{x1,y1,x2,y2,stroke:'transparent','stroke-width':3.2,'data-e':e.k},gTr); hit.style.cursor='pointer'; });
+  MAIN_C.forEach(c=>el('text',{x:X(K1)+1,y:Y(c)-1,'font-size':2.6,fill:'var(--mut)','font-family':'var(--f)'},gEtq).textContent='Calle '+c+' Sur');
+  MAIN_K.forEach(k=>{const t=el('text',{x:X(k)+1,y:Y(C0)+3.4,'font-size':2.6,fill:'var(--mut)','font-family':'var(--f)'},gEtq);t.textContent='Kr '+k});
+}
+function pintar(){
+  calcular(); ruta=rutaActual();
+  // trancones
+  gTr.querySelectorAll('.tr').forEach(n=>n.remove());
+  edges.filter(e=>e.t).forEach(e=>{const [x1,y1]=nodoXY(e.a),[x2,y2]=nodoXY(e.b); el('line',{class:'tr',x1,y1,x2,y2,stroke:'var(--red)','stroke-width':2.4,'stroke-linecap':'round','pointer-events':'none'},gTr)});
+  // ruta
+  gRuta.innerHTML=''; const seq=[ultimo,...ruta.ord,0];
+  const pts=[]; const pie=[];
+  for(let i=0;i<seq.length-1;i++){ const a=seq[i],b=seq[i+1]; const pa=paradas[a],pb=paradas[b];
+    const cam=calc.camino(a,b).map(nodoXY); const ia=[X(pa.K),Y(pa.C)], ib=[X(pb.K),Y(pb.C)];
+    if(veh==='elec'){ pie.push([ia,cam[0]]); pie.push([cam[cam.length-1],ib]); pts.push(cam) } else pts.push([ia,...cam,ib]) }
+  pts.forEach(p=>{ const d=p.map(q=>q.join(',')).join(' ');
+    el('polyline',{points:d,fill:'none',stroke:'var(--route-case)','stroke-width':2.6,'stroke-linejoin':'round','stroke-linecap':'round'},gRuta);
+    el('polyline',{points:d,fill:'none',stroke:'var(--route)','stroke-width':1.6,'stroke-linejoin':'round','stroke-linecap':'round'},gRuta) });
+  pie.forEach(([a,b])=>{ if(Math.hypot(a[0]-b[0],a[1]-b[1])>.3) el('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:'var(--mag)','stroke-width':.7,'stroke-dasharray':'.9 .7'},gRuta) });
+  // flechas de sentido sobre cada tramo
+  pts.forEach(p=>{ if(p.length<2)return; const m=Math.floor((p.length-1)/2); const [x1,y1]=p[m],[x2,y2]=p[m+1]||p[m]; const ang=Math.atan2(y2-y1,x2-x1)*180/Math.PI;
+    if(Math.hypot(x2-x1,y2-y1)<.1)return; const g=el('g',{transform:`translate(${(x1+x2)/2},${(y1+y2)/2}) rotate(${ang})`},gRuta); el('path',{d:'M-.9,-.8 L.7,0 L-.9,.8',fill:'none',stroke:'#fff','stroke-width':.45},g) });
+  // paradas
+  gPar.innerHTML='';
+  const pos={}; ruta.ord.forEach((p,i)=>pos[p]=i+1);
+  paradas.forEach(p=>{ const x=X(p.K),y=Y(p.C); const g=el('g',{transform:`translate(${x},${y})`,'data-p':p.id},gPar); g.style.cursor='pointer';
+    if(p.bodega){ el('rect',{x:-2.3,y:-2.3,width:4.6,height:4.6,rx:.8,fill:'var(--ink)',stroke:'#fff','stroke-width':.5},g); const t=el('text',{y:1,'text-anchor':'middle','font-size':2.6,'font-weight':700,fill:'var(--phone)','font-family':'var(--f)'},g); t.textContent='B'; return }
+    const hecho=paradaHecha(p), todosNo=hecho&&p.cl.every(c=>estado[c.o]==='no');
+    const col=hecho?(todosNo?'var(--no)':'var(--ok)'):(pos[p.id]===1?'var(--mag)':'var(--az)');
+    el('circle',{r:p.cl.length>1?2.6:2.1,fill:col,stroke:'#fff','stroke-width':.5},g);
+    const t=el('text',{y:.95,'text-anchor':'middle','font-size':2.4,'font-weight':700,fill:'#fff','font-family':'var(--f)'},g); t.textContent=hecho?(todosNo?'✕':'✓'):pos[p.id];
+    if(p.cl.length>1){ el('circle',{cx:2.3,cy:-2.1,r:1.3,fill:'var(--ink)'},g); const b=el('text',{x:2.3,y:-1.45,'text-anchor':'middle','font-size':1.7,'font-weight':700,fill:'var(--phone)','font-family':'var(--f)'},g); b.textContent=p.cl.length } });
+  // resumen
+  const L=largo(seq), V=VEH[veh]; const min=L.k/V.vel*60+L.p/VEL_PIE*60;
+  document.getElementById('rKm').textContent=fmt(L.k)+' km';
+  const nCli=ruta.ord.reduce((s,p)=>s+paradas[p].cl.filter(c=>!estado[c.o]).length,0);
+  document.getElementById('rDet').textContent=`${Math.round(min)} min · ${ruta.ord.length} paradas · ${nCli} clientes`+(L.p>0.005?` · ${Math.round(L.p*1000)} m a pie`:'');
+  const la=largo([ultimo,...ruta.app,0]), lo=largo([ultimo,...ruta.opt,0]);
+  const red=la.k>0?(la.k-lo.k)/la.k*100:0;
+  document.getElementById('comp').innerHTML=`<span>Orden de la app</span><span>${fmt(la.k)} km</span><span>Optimizada (${V.nom.toLowerCase()})</span><span>${fmt(lo.k)} km</span><span>Ahorro</span><span class="baja">${red>0.05?'−'+fmt1(red)+' %':'0 %'}</span>`;
+  document.getElementById('hPar').textContent=(ultimo===0?'Paradas desde la bodega':'Paradas restantes desde '+paradas[ultimo].nom);
+  const ol=document.getElementById('paradas'); ol.innerHTML='';
+  let prev=ultimo;
+  ruta.ord.forEach((pid,i)=>{ const p=paradas[pid]; const li=document.createElement('li');
+    const n=p.cl.filter(c=>!estado[c.o]).length; const d=calc.km(prev,pid)+calc.kmPie(prev,pid); prev=pid;
+    li.innerHTML=`<span class="num ${i===0?'sig':''}">${i+1}</span><span class="pn">${esc(p.nom)}<small>${p.cl.length>1?(n===1?'1 cliente pendiente':n+' clientes pendientes'):esc(p.cl[0].d)}</small></span><span class="pk">${Math.round(d*1000)} m</span>`;
+    li.onclick=()=>abrir(pid); ol.appendChild(li) });
+  const hechas=paradas.filter(paradaHecha);
+  if(hechas.length){ const li=document.createElement('li'); li.style.cursor='default'; li.innerHTML=`<span class="num ok">✓</span><span class="pn">${hechas.length} paradas terminadas<small>${hechas.map(p=>p.nom).join(', ')}</small></span><span></span>`; ol.appendChild(li) }
+  document.getElementById('sinub').textContent=sinUb.map(c=>c.n+' ('+c.d+')').join(' · ')+'. Se ubican marcándolos en el mapa.';
+  aplicarVB();
+}
+const fmt=x=>x.toFixed(2).replace('.',','), fmt1=x=>x.toFixed(1).replace('.',',');
+const pesos=n=>'$'+n.toLocaleString('es-CO');
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+
+// ---------- ficha del cliente / parada ----------
+const ficha=document.getElementById('ficha');
+let abierta=null;
+function tarjeta(c,conBotones){
+  const e=estado[c.o]; const v=c.v;
+  const ult=v?`${v.f} · ${c.p.length?c.p.join(', ')+' · ':''}total ${pesos(v.tot)}, pagó ${pesos(v.pag)} (${v.met})`:'Sin compras en la última ruta';
+  return `<div class="cli ${e||''}"><h4><span>${esc(c.n)}</span><span class="est ${e||''}">${e==='ok'?'Atendido':e==='no'?'No estaba':'#'+c.o+' en la app'}</span></h4>
+   <p class="dato">📍 ${esc(c.d)}${c.C==null?' · sin ubicación':''}${c.est==='est_hora'||c.est==='est_sector'?' · ubicación estimada':''}</p>
+   <p class="dato">💳 Deuda: <span class="deuda ${c.deuda?'':'cero'}">${c.deuda?pesos(c.deuda):'Sin deuda'}</span></p>
+   <p class="dato">🧾 Última compra: ${esc(ult)}</p>
+   ${conBotones?`<div class="tres"><button class="b-ok" data-ok="${c.o}" aria-label="Atendido">✓</button><button class="b-no" data-no="${c.o}" aria-label="No estaba">✕</button><button class="b-ven" data-ven="${c.o}">💰 VENTA</button></div>`:''}</div>` }
+function abrir(pid){ abierta=pid; const p=paradas[pid];
+  document.getElementById('fTit').textContent=p.nom;
+  const dk=calc.km(ultimo,pid)+calc.kmPie(ultimo,pid);
+  document.getElementById('fSub').textContent=(p.cl.length>1?p.cl.length+' clientes en esta parada · ':'')+(pid===ultimo?'Aquí estás':Math.round(dk*1000)+' m desde '+(ultimo===0?'la bodega':paradas[ultimo].nom));
+  document.getElementById('fCli').innerHTML=p.bodega?'<p class="dato">Punto de inicio y fin de la ruta.</p>':p.cl.map(c=>tarjeta(c,true)).join('');
+  ficha.classList.add('on') }
+function abrirCliente(c){ abierta=null; document.getElementById('fTit').textContent=c.n; document.getElementById('fSub').textContent='Cuenta del cliente';
+  document.getElementById('fCli').innerHTML=tarjeta(c,false); ficha.classList.add('on') }
+document.getElementById('fX').onclick=()=>ficha.classList.remove('on');
+document.getElementById('fCli').addEventListener('click',ev=>{ const b=ev.target.closest('button'); if(!b)return;
+  if(b.dataset.ven){ toast('Aquí se abre Registrar venta, la misma pantalla que ya usa la app.'); return }
+  const o=+(b.dataset.ok||b.dataset.no); estado[o]=b.dataset.ok?'ok':'no';
+  const p=paradas[abierta]; if(paradaHecha(p)){ ultimo=p.id; ficha.classList.remove('on'); pintar(); aviso('Parada terminada. Ruta recalculada desde '+p.nom+'.') } else { pintar(); abrir(abierta) } });
+
+// ---------- controles ----------
+function setVeh(v){veh=v;document.getElementById('vElec').setAttribute('aria-pressed',v==='elec');document.getElementById('vPedal').setAttribute('aria-pressed',v==='pedal');pintar();aviso(v==='elec'?'Eléctrico: usa vías principales y calles; el último tramo es a pie.':'Pedal: entra por pasajes y cuadras pequeñas.')}
+document.getElementById('vElec').onclick=()=>setVeh('elec'); document.getElementById('vPedal').onclick=()=>setVeh('pedal');
+function setModo(m){modo=m;document.getElementById('oApp').setAttribute('aria-pressed',m==='app');document.getElementById('oOpt').setAttribute('aria-pressed',m==='opt');pintar()}
+document.getElementById('oApp').onclick=()=>setModo('app'); document.getElementById('oOpt').onclick=()=>setModo('opt');
+document.getElementById('mTran').onclick=()=>{marcando=!marcando;document.getElementById('mTran').setAttribute('aria-pressed',marcando);document.getElementById('mapa').classList.toggle('trancon',marcando);aviso(marcando?'Toca una calle para marcar o quitar un trancón.':'Modo trancón apagado.')};
+document.getElementById('bSim').onclick=()=>{ // pone un trancón en la cuadra más usada de la ruta actual
+  const antes=largo([ultimo,...ruta.ord,0]); const seq=[ultimo,...ruta.ord,0]; const usados=new Map();
+  for(let i=0;i<seq.length-1;i++){ const c=calc.camino(seq[i],seq[i+1]); for(let j=0;j<c.length-1;j++){ const e=adj[c[j]].find(e=>(e.a===c[j]&&e.b===c[j+1])||(e.b===c[j]&&e.a===c[j+1])); if(e&&!e.t&&e.cl!=='pas') usados.set(e,(usados.get(e)||0)+(e.cl==='main'?2:1)) } }
+  const top=[...usados.entries()].sort((a,b)=>b[1]-a[1])[0]; if(!top){aviso('No hay calles en la ruta para simular.');return}
+  // tres cuadras seguidas sobre la misma vía
+  const e0=top[0]; const misma=edges.filter(e=>e.nom===e0.nom); const idx=misma.indexOf(e0); misma.slice(Math.max(0,idx-1),idx+2).forEach(e=>e.t=true);
+  pintar(); const despues=largo([ultimo,...ruta.ord,0]);
+  aviso(`Trancón en ${e0.nom}. Ruta recalculada: ${fmt(antes.k)} → ${fmt(despues.k)} km para esquivarlo.`) };
+document.getElementById('bReset').onclick=()=>{ for(const k in estado) delete estado[k]; edges.forEach(e=>e.t=false); ultimo=0; pintar(); aviso('Ruta reiniciada desde la bodega.') };
+
+// mapa: arrastrar, zoom y toques
+function aplicarVB(){svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`)}
+function zoom(f,cx,cy){ cx=cx??vb.x+vb.w/2; cy=cy??vb.y+vb.h/2; const nw=Math.min(Math.max(vb.w*f,25),W+40); const r=nw/vb.w; vb={x:cx-(cx-vb.x)*r,y:cy-(cy-vb.y)*r,w:nw,h:vb.h*r}; aplicarVB() }
+function encuadrar(){ const r=svg.getBoundingClientRect(); const asp=(r.height||340)/(r.width||400);
+  const xs=paradas.map(p=>X(p.K)), ys=paradas.map(p=>Y(p.C));
+  let x0=Math.min(...xs)-6, x1=Math.max(...xs)+16, y0=Math.min(...ys)-16, y1=Math.max(...ys)+14; // margen para botones
+  let w=x1-x0, h=y1-y0; if(h/w>asp){ const nw=h/asp; x0-=(nw-w)/2; w=nw } else { const nh=w*asp; y0-=(nh-h)/2; h=nh }
+  vb={x:x0,y:y0,w,h}; aplicarVB() }
+document.getElementById('zIn').onclick=()=>zoom(.7); document.getElementById('zOut').onclick=()=>zoom(1.4); document.getElementById('zFit').onclick=encuadrar;
+let drag=null;
+svg.addEventListener('pointerdown',ev=>{drag={x:ev.clientX,y:ev.clientY,vb:{...vb},mov:false,t:ev.target};svg.setPointerCapture(ev.pointerId)});
+svg.addEventListener('pointermove',ev=>{ if(!drag)return; const r=svg.getBoundingClientRect(); const dx=(ev.clientX-drag.x)*vb.w/r.width, dy=(ev.clientY-drag.y)*vb.h/r.height;
+  if(Math.abs(ev.clientX-drag.x)+Math.abs(ev.clientY-drag.y)>5) drag.mov=true; if(drag.mov){vb.x=drag.vb.x-dx;vb.y=drag.vb.y-dy;aplicarVB()} });
+svg.addEventListener('pointerup',ev=>{ const d=drag; drag=null; if(!d||d.mov)return; const t=d.t;
+  const g=t.closest&&t.closest('[data-p]'); if(g){abrir(+g.dataset.p);return}
+  if(marcando&&t.dataset&&t.dataset.e!==undefined){ const e=edges[+t.dataset.e]; e.t=!e.t; pintar(); aviso((e.t?'Trancón marcado en ':'Trancón quitado en ')+e.nom+'. Ruta recalculada.') } });
+svg.addEventListener('wheel',ev=>{ev.preventDefault(); const r=svg.getBoundingClientRect(); const cx=vb.x+(ev.clientX-r.left)/r.width*vb.w, cy=vb.y+(ev.clientY-r.top)/r.height*vb.h; zoom(ev.deltaY>0?1.15:.87,cx,cy)},{passive:false});
+
+let tAv; function aviso(t){const a=document.getElementById('aviso');a.textContent=t;a.classList.add('on');clearTimeout(tAv);tAv=setTimeout(()=>a.classList.remove('on'),3200)}
+let tTo; function toast(t){const a=document.getElementById('toast');a.textContent=t;a.classList.add('on');clearTimeout(tTo);tTo=setTimeout(()=>a.classList.remove('on'),2600)}
+
+// pestañas
+function tab(r){document.getElementById('tRuta').setAttribute('aria-selected',r);document.getElementById('tCli').setAttribute('aria-selected',!r);document.getElementById('vRuta').hidden=!r;document.getElementById('vCli').hidden=r;ficha.classList.remove('on')}
+document.getElementById('tRuta').onclick=()=>tab(true); document.getElementById('tCli').onclick=()=>tab(false);
+function listaClientes(){ const q=document.getElementById('q').value.trim().toLowerCase(); const ol=document.getElementById('clientes'); ol.innerHTML='';
+  CLIENTES.filter(c=>!q||(c.n+' '+c.d).toLowerCase().includes(q)).forEach(c=>{ const li=document.createElement('li');
+    li.innerHTML=`<span class="num ${c.deuda?'':'ok'}" style="${c.deuda?'background:var(--red)':''}">${c.o}</span><span class="pn">${esc(c.n)}<small>${esc(c.d)}</small></span><span class="pk">${c.deuda?pesos(c.deuda):'Al día'}</span>`;
+    li.onclick=()=>abrirCliente(c); ol.appendChild(li) }) }
+document.getElementById('q').addEventListener('input',listaClientes);
+
+dibujarBase(); pintar(); requestAnimationFrame(encuadrar); listaClientes();
+window.addEventListener('resize',encuadrar);
+</script>
