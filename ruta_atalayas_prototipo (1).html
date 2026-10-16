@@ -1,0 +1,422 @@
+<title>ASEFULL Rutas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/* App de ruta ASEFULL: un teléfono centrado; en celular ocupa toda la pantalla */
+:root{
+  --mag:#D4157F; --mag-2:#B0106A; --az:#1A73E8; --ink:#17151C; --mut:#5E5C68; --line:#E7E6EC; --chip:#F3F2F6;
+  --ok:#1E8E4E; --ok-bg:#DDF3E5; --no:#7B7986; --warn:#B26A00; --red:#C62828; --red-bg:#FDE7E7;
+  --map:#ECEEE8; --block:#E1E4DB; --st:#FFFFFF; --st-edge:#CDD1C6; --st-pas:#F5F6F2;
+  --f:"Plus Jakarta Sans","Segoe UI",system-ui,sans-serif; color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:#E9E7EE;color:var(--ink);font-family:var(--f);font-size:14px;-webkit-tap-highlight-color:transparent}
+.marco{min-height:100%;display:flex;align-items:center;justify-content:center;padding-block:20px;padding-inline:16px}
+.tel{position:relative;width:100%;max-width:400px;height:min(860px,calc(100vh - 40px));min-height:640px;background:#fff;border-radius:34px;overflow:hidden;box-shadow:0 20px 60px rgba(23,21,28,.25),0 0 0 10px #17151C}
+@media (max-width:480px){.marco{padding:0}.tel{max-width:none;height:100vh;height:100dvh;min-height:0;border-radius:0;box-shadow:none}}
+.pant{position:absolute;inset:0;display:flex;flex-direction:column}
+button{font-family:var(--f);cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--az);outline-offset:2px}
+/* ---- inicio ---- */
+.cab{background:var(--mag);color:#fff;padding:22px 20px 18px}
+.cab small{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.cab h1{margin:4px 0 2px;font-size:26px;font-weight:800;letter-spacing:-.01em}
+.cab p{margin:0;font-size:13px;opacity:.9}
+.cuerpo{flex:1;overflow:auto;padding:16px 16px 160px;display:flex;flex-direction:column;gap:14px}
+.prev{position:relative;height:250px;border-radius:20px;overflow:hidden;background:var(--map);flex:none}
+.prev svg{width:100%;height:100%;display:block}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.st{background:var(--chip);border-radius:16px;padding:10px 12px}
+.st b{display:block;font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.st span{font-size:12px;color:var(--mut)}
+.grupo{display:flex;flex-direction:column;gap:6px}
+.grupo label{font-size:12px;font-weight:700;color:var(--mut);letter-spacing:.06em;text-transform:uppercase}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--chip);border-radius:14px;padding:4px;gap:4px}
+.seg button{border:0;background:transparent;border-radius:11px;padding:10px 6px;font-weight:700;font-size:14px;color:var(--ink);min-height:44px}
+.seg button[aria-pressed="true"]{background:#fff;box-shadow:0 1px 4px rgba(23,21,28,.15);color:var(--mag)}
+.ahorro{font-size:13px;color:var(--ok);font-weight:700}
+.cta{position:absolute;left:16px;right:16px;bottom:82px;height:58px;border:0;border-radius:18px;background:var(--mag);color:#fff;font-size:17px;font-weight:800;box-shadow:0 8px 20px rgba(212,21,127,.35);display:flex;align-items:center;justify-content:center;gap:10px}
+.tabs{position:absolute;left:0;right:0;bottom:0;height:70px;border-top:1px solid var(--line);background:#fff;display:grid;grid-template-columns:1fr 1fr;padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabs button{border:0;background:transparent;font-size:12px;font-weight:700;color:var(--mut);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.tabs button[aria-selected="true"]{color:var(--mag)}
+/* ---- clientes ---- */
+.buscar{width:100%;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:12px 14px;font:500 15px var(--f);color:var(--ink)}
+.lista{list-style:none;margin:0;padding:0}
+.lista li{display:flex;gap:12px;align-items:center;padding:12px 2px;border-bottom:1px solid var(--line)}
+.lista button.fila{all:unset;display:flex;gap:12px;align-items:center;width:100%;cursor:pointer}
+.av{width:38px;height:38px;border-radius:50%;background:var(--chip);display:grid;place-items:center;font-weight:800;font-size:13px;color:var(--mut);flex:none}
+.nm{flex:1;min-width:0}.nm b{display:block;font-size:15px}.nm span{display:block;font-size:12px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.monto{font-weight:800;font-size:14px;font-variant-numeric:tabular-nums}.monto.debe{color:var(--red)}.monto.dia{color:var(--ok)}
+/* ---- navegación ---- */
+.mapa{position:absolute;inset:0;background:var(--map);touch-action:none}
+.mapa svg{width:100%;height:100%;display:block}
+.indic{position:absolute;left:12px;right:12px;top:12px;background:var(--ink);color:#fff;border-radius:20px;padding:14px 16px;display:flex;gap:14px;align-items:center;box-shadow:0 8px 24px rgba(23,21,28,.3)}
+.indic svg{flex:none}
+.indic b{display:block;font-size:19px;font-weight:800;line-height:1.15}
+.indic span{display:block;font-size:13px;color:#D6D4DD;margin-top:2px}
+.aviso{position:absolute;left:12px;right:12px;top:12px;border-radius:20px;padding:14px 16px;color:#fff;font-weight:700;display:flex;gap:12px;align-items:center;box-shadow:0 8px 24px rgba(23,21,28,.3);z-index:4}
+.aviso.rojo{background:var(--red)}.aviso.nar{background:#C25E00}
+.aviso b{display:block;font-size:17px;font-weight:800}.aviso span{display:block;font-size:13px;font-weight:600;opacity:.92}
+.fabs{position:absolute;right:12px;top:118px;display:flex;flex-direction:column;gap:10px;z-index:3}
+.fab{width:48px;height:48px;border-radius:50%;border:0;background:#fff;box-shadow:0 2px 10px rgba(23,21,28,.22);display:grid;place-items:center;color:var(--ink)}
+.fab.on{background:var(--ink);color:#fff}
+.menu{position:absolute;right:68px;top:118px;background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(23,21,28,.25);padding:8px;display:flex;flex-direction:column;min-width:210px;z-index:5}
+.menu button{border:0;background:transparent;text-align:left;padding:12px;border-radius:12px;font-size:14px;font-weight:600;color:var(--ink);min-height:44px}
+.menu button:hover{background:var(--chip)}
+.menu hr{border:0;border-top:1px solid var(--line);margin:4px 6px}
+.hoja{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:26px 26px 0 0;box-shadow:0 -8px 24px rgba(23,21,28,.16);padding:10px 18px calc(18px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px;z-index:3}
+.asa{width:40px;height:5px;border-radius:3px;background:#D9D8DF;align-self:center}
+.sig{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.sig small{display:block;font-size:12px;font-weight:700;color:var(--mut);letter-spacing:.06em;text-transform:uppercase}
+.sig b{display:block;font-size:21px;font-weight:800;line-height:1.2}
+.sig span{display:block;font-size:13px;color:var(--mut)}
+.eta{text-align:right;flex:none}.eta b{font-size:26px;color:var(--ok);font-variant-numeric:tabular-nums}
+.barra{height:6px;border-radius:3px;background:#EEEDF2;overflow:hidden}.barra i{display:block;height:100%;background:var(--mag);transition:width .3s}
+.meta{font-size:12px;color:var(--mut);font-variant-numeric:tabular-nums}
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b1{height:50px;border:0;border-radius:14px;background:var(--mag);color:#fff;font-size:15px;font-weight:800}
+.b2{height:50px;border:1.5px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);font-size:14px;font-weight:700}
+/* ---- llegada ---- */
+.velo{position:absolute;inset:0;background:rgba(23,21,28,.35);z-index:6}
+.llegada{position:absolute;left:0;right:0;bottom:0;max-height:78%;background:#fff;border-radius:26px 26px 0 0;padding:10px 18px calc(18px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:10px;z-index:7}
+.llegada h2{margin:2px 0 0;font-size:21px;font-weight:800}
+.llegada .sub{font-size:13px;color:var(--mut)}
+.clis{overflow:auto;flex:1;min-height:0;border-top:1px solid var(--line)}
+.cli{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.cli .nm span.debe{color:var(--red);font-weight:700}
+.ico{width:44px;height:44px;border:0;border-radius:12px;display:grid;place-items:center;color:#fff;flex:none}
+.ico.ok{background:#9E9E9E}.ico.no{background:#E53935}.ven{height:44px;border:0;border-radius:12px;background:#F28C00;color:#fff;font-weight:800;padding:0 12px;flex:none}
+.pill{font-size:12px;font-weight:800;border-radius:999px;padding:5px 10px;flex:none}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}.pill.no{background:var(--chip);color:var(--no)}
+.deshacer{border:0;background:transparent;color:var(--az);font-weight:700;font-size:12px;padding:6px}
+/* ---- resumen / ficha ---- */
+.resumen{position:absolute;inset:0;background:#fff;z-index:8;display:flex;flex-direction:column;padding:28px 20px 24px;gap:16px;overflow:auto}
+.resumen h2{margin:0;font-size:28px;font-weight:800}
+.grande{font-size:56px;font-weight:800;color:var(--mag);letter-spacing:-.02em;line-height:1}
+.ficha{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:26px 26px 0 0;box-shadow:0 -8px 30px rgba(23,21,28,.25);padding:10px 18px 24px;z-index:9;display:flex;flex-direction:column;gap:10px}
+.fila2{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:8px 0;border-bottom:1px solid var(--line)}
+.fila2 span{color:var(--mut)}
+.toast{position:absolute;left:16px;right:16px;bottom:96px;background:var(--ink);color:#fff;padding:12px 14px;border-radius:14px;font-size:13px;font-weight:600;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+.cerrar{position:absolute;left:12px;bottom:auto;top:auto}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="marco"><div class="tel" id="tel">
+
+ <!-- INICIO -->
+ <section class="pant" id="pInicio" aria-label="Ruta del día">
+  <header class="cab"><small>ASEFULL · Ruta del día</small><h1>Atalayas · Sábado</h1><p>Sale y vuelve a la bodega · Cra 87I # 69 Sur-34</p></header>
+  <div class="cuerpo" id="cuerpoRuta">
+   <div class="prev"><svg id="svgPrev" role="img" aria-label="Mapa de la ruta del día"></svg></div>
+   <div class="stats">
+    <div class="st"><b id="sCli">–</b><span>clientes</span></div>
+    <div class="st"><b id="sKm">–</b><span id="sKmL">por calles</span></div>
+    <div class="st"><b id="sT">–</b><span>tiempo estimado</span></div>
+   </div>
+   <div class="grupo"><label id="lVeh">Triciclo</label>
+    <div class="seg" role="group" aria-labelledby="lVeh"><button id="vElec" aria-pressed="true">Eléctrico</button><button id="vPedal" aria-pressed="false">De pedal</button></div>
+   </div>
+   <div class="grupo"><label id="lOrd">Orden de visita</label>
+    <div class="seg" role="group" aria-labelledby="lOrd"><button id="oOpt" aria-pressed="true">Optimizado</button><button id="oApp" aria-pressed="false">El de siempre</button></div>
+    <div class="ahorro" id="ahorro"></div>
+   </div>
+  </div>
+  <div class="cuerpo" id="cuerpoCli" hidden>
+   <label for="q" style="font-size:12px;font-weight:700;color:var(--mut);letter-spacing:.06em;text-transform:uppercase">Buscar cliente</label>
+   <input class="buscar" id="q" placeholder="Nombre o dirección" autocomplete="off">
+   <ul class="lista" id="listaCli"></ul>
+  </div>
+  <button class="cta" id="bIniciar"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3l12 7-12 7z" fill="#fff"/></svg>Iniciar ruta</button>
+  <nav class="tabs" role="tablist">
+   <button role="tab" id="tRuta" aria-selected="true"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M4 18c3-8 11-4 14-14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="4" cy="18" r="2.4" fill="currentColor"/><circle cx="18" cy="4" r="2.4" fill="currentColor"/></svg>Ruta</button>
+   <button role="tab" id="tCli" aria-selected="false"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 20c1-6 15-6 16 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Clientes</button>
+  </nav>
+ </section>
+
+ <!-- NAVEGACIÓN -->
+ <section class="pant" id="pNav" hidden aria-label="Navegación">
+  <div class="mapa"><svg id="svgNav" role="img" aria-label="Mapa de navegación"></svg></div>
+  <div class="indic" id="indic"><svg id="flecha" width="38" height="38" viewBox="0 0 40 40" aria-hidden="true"></svg><div><b id="iTit">–</b><span id="iSub"></span></div></div>
+  <div class="aviso" id="aviso" hidden><svg width="30" height="30" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 4L32 30H2z" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><path d="M17 13v8" stroke="#fff" stroke-width="3" stroke-linecap="round"/><circle cx="17" cy="25.5" r="1.8" fill="#fff"/></svg><div><b id="aTit"></b><span id="aSub"></span></div></div>
+  <div class="fabs">
+   <button class="fab" id="bVista" aria-label="Ver toda la ruta"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 8V3h5M19 8V3h-5M3 14v5h5M19 14v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+   <button class="fab" id="bPausa" aria-label="Pausar"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" id="icPausa"><rect x="5" y="4" width="3.5" height="12" rx="1" fill="currentColor"/><rect x="11.5" y="4" width="3.5" height="12" rx="1" fill="currentColor"/></svg></button>
+   <button class="fab" id="bMenu" aria-label="Simular situaciones" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="5" cy="11" r="2" fill="currentColor"/><circle cx="11" cy="11" r="2" fill="currentColor"/><circle cx="17" cy="11" r="2" fill="currentColor"/></svg></button>
+  </div>
+  <div class="menu" id="menu" hidden>
+   <button id="mDesvio">Simular un desvío</button>
+   <button id="mTrancon">Simular un trancón</button>
+   <hr>
+   <button id="mVel">Velocidad de la simulación: x40</button>
+   <button id="mSalir" style="color:var(--red)">Terminar ruta</button>
+  </div>
+  <div class="hoja">
+   <div class="asa"></div>
+   <div class="sig"><div style="min-width:0"><small id="hEt">Siguiente parada</small><b id="hNom">–</b><span id="hDir"></span></div><div class="eta"><b id="hMin">–</b><span id="hM" class="meta"></span></div></div>
+   <div class="barra"><i id="hBar" style="width:0"></i></div>
+   <div class="meta" id="hMeta"></div>
+   <div class="dos"><button class="b1" id="bLlegue">Llegué</button><button class="b2" id="bGmaps">Abrir en Google Maps</button></div>
+  </div>
+  <div class="velo" id="velo" hidden></div>
+  <div class="llegada" id="llegada" hidden role="dialog" aria-modal="true" aria-labelledby="lTit">
+   <div class="asa"></div>
+   <div><h2 id="lTit"></h2><div class="sub" id="lSub"></div></div>
+   <div class="clis" id="lCli"></div>
+   <button class="b1" id="bSig" style="height:54px">Siguiente parada</button>
+  </div>
+  <div class="resumen" id="resumen" hidden>
+   <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mag)">Ruta terminada</div>
+   <h2>¡Listo por hoy!</h2>
+   <div><div class="grande" id="rKm">–</div><div style="font-weight:700;color:var(--mut)">recorridos por calles</div></div>
+   <div class="stats" id="rStats"></div>
+   <div id="rDet"></div>
+   <button class="b1" id="bVolver" style="height:56px;margin-top:auto">Volver al inicio</button>
+  </div>
+ </section>
+
+ <div class="ficha" id="ficha" hidden role="dialog" aria-modal="true" aria-labelledby="fTit">
+  <div class="asa"></div>
+  <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><h2 id="fTit" style="margin:2px 0 0;font-size:21px"></h2><div class="sub" id="fSub" style="font-size:13px;color:var(--mut)"></div></div><button class="fab" id="fX" aria-label="Cerrar" style="box-shadow:none;background:var(--chip);width:40px;height:40px"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button></div>
+  <div id="fCuerpo"></div>
+ </div>
+ <div class="toast" id="toast"></div>
+</div></div>
+
+<script>
+const CLIENTES = [{"o": 2, "n": "Camilo", "d": "Cll 69A Sur # 88-20", "C": 69.25, "K": 88.2, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 4, "n": "Sandra", "d": "Cll 64 Sur # 89A-87", "C": 64.0, "K": 89.97, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 5, "n": "Sara R.", "d": "Cll 64 Sur # 89A-87", "C": 64.0, "K": 89.97, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 7, "n": "Martha", "d": "Cll 63 Sur # 91-69", "C": 63.0, "K": 91.69, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 8, "n": "Derly", "d": "Cll 64 Sur # 91-81", "C": 64.0, "K": 91.81, "est": "dir", "deuda": 2000, "v": {"f": "03/10", "h": "12:32", "met": "Efectivo", "tot": 0, "pag": 2000}, "p": [], "g": null}, {"o": 9, "n": "Mariela", "d": "Cll 64 Sur # 91-83", "C": 64.0, "K": 91.83, "est": "dir", "deuda": 6000, "v": {"f": "03/10", "h": "12:31", "met": "Efectivo", "tot": 6000, "pag": 2000}, "p": ["Ambientador Spray x1"], "g": null}, {"o": 10, "n": "Manuel Bicis", "d": "Cll 64 Sur # 91-87", "C": 64.0, "K": 91.87, "est": "dir", "deuda": 90000, "v": null, "p": [], "g": null}, {"o": 11, "n": "Clara I.", "d": "Cll 62C Sur # 91-52", "C": 62.75, "K": 91.52, "est": "dir", "deuda": 22000, "v": null, "p": [], "g": null}, {"o": 13, "n": "Brayan M.", "d": "Cll 62C Sur # 91-90", "C": 62.75, "K": 91.9, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 14, "n": "Sandra", "d": "Cra 92 # 62B-33 Sur", "C": 62.83, "K": 92.0, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 15, "n": "Mari", "d": "Cll 62B Sur # 91-81", "C": 62.5, "K": 91.81, "est": "dir", "deuda": 39000, "v": {"f": "03/10", "h": "12:44", "met": "Efectivo", "tot": 17000, "pag": 20000}, "p": ["Limpiador de pisos x2", "Blanqueador x1"], "g": null}, {"o": 16, "n": "Liz", "d": "Cll 62B Sur # 91A-81", "C": 62.5, "K": 91.91, "est": "dir", "deuda": 36000, "v": {"f": "03/10", "h": "12:44", "met": "Nequi", "tot": 5000, "pag": 30000}, "p": ["Blanqueador x1"], "g": null}, {"o": 17, "n": "Esperanza", "d": "Cll 62B Sur # 91A-83", "C": 62.5, "K": 91.93, "est": "dir", "deuda": 27000, "v": null, "p": [], "g": null}, {"o": 18, "n": "Iris A.", "d": "Cll 62B Sur # 91A-83", "C": 62.5, "K": 91.93, "est": "dir", "deuda": 29000, "v": {"f": "03/10", "h": "12:48", "met": "Efectivo", "tot": 21000, "pag": 10000}, "p": ["Desengrasante x1", "Limpiador de pisos x1", "Ambientador Spray x1"], "g": null}, {"o": 19, "n": "Diana L.", "d": "Cra 92 # 62A-17 Sur", "C": 62.42, "K": 92.0, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 21, "n": "Maribel", "d": "Cra 97B # 61-99 Sur", "C": 61.99, "K": 97.2, "est": "dir", "deuda": 20000, "v": {"f": "03/10", "h": "12:57", "met": "Efectivo", "tot": 13000, "pag": 5000}, "p": ["Jabon De Ropa x1"], "g": null}, {"o": 22, "n": "Natalia", "d": "Cra 97B # 61-99 Sur", "C": 61.99, "K": 97.2, "est": "dir", "deuda": 16000, "v": {"f": "03/10", "h": "12:57", "met": "Efectivo", "tot": 6000, "pag": 0}, "p": ["Ambientador Spray x1"], "g": null}, {"o": 23, "n": "Angie R.", "d": "Cra 97B # 61-99 Sur", "C": 61.99, "K": 97.2, "est": "dir", "deuda": 6000, "v": null, "p": [], "g": null}, {"o": 24, "n": "Disney", "d": "Cll 61A Sur # 97B-26", "C": 61.25, "K": 97.46, "est": "dir", "deuda": 0, "v": {"f": "03/10", "h": "13:00", "met": "Efectivo", "tot": 6000, "pag": 6000}, "p": ["Limpiador de pisos x1"], "g": null}, {"o": 25, "n": "Rocío", "d": "Cll 62A Sur # 98A-33", "C": 62.25, "K": 98.43, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 26, "n": "Elena", "d": "Cra 98B # 61A-30 Sur", "C": 61.55, "K": 98.2, "est": "dir", "deuda": 24000, "v": null, "p": [], "g": null}, {"o": 27, "n": "Rosalba", "d": "Cll 62A Sur # 112-48", "C": 62.25, "K": 98.45, "est": "dir", "deuda": 18000, "v": null, "p": [], "g": null}, {"o": 28, "n": "Amanda", "d": "Cll 62A Sur # 98B-20", "C": 62.25, "K": 98.4, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 29, "n": "Don Leo", "d": "Cll 69 Sur # 99A-99", "C": 69.0, "K": 100.09, "est": "dir", "deuda": 0, "v": null, "p": [], "g": null}, {"o": 30, "n": "Aleida", "d": "Cra 98B con Calle 69 Sur (Santa Mónica 1)", "C": 69.0, "K": 98.2, "est": "dir", "deuda": 7000, "v": {"f": "03/10", "h": "13:26", "met": "Efectivo", "tot": 7000, "pag": 0}, "p": ["Desengrasante x1"], "g": "Santa Mónica 1"}, {"o": 31, "n": "Empanadas", "d": "Cra 98B con Calle 69 Sur (Santa Mónica 1)", "C": 69.0, "K": 98.2, "est": "dir", "deuda": 0, "v": null, "p": [], "g": "Santa Mónica 1"}, {"o": 32, "n": "María Eugenia", "d": "Cra 94A # 69-42 Sur (Nueva Ciudad 3)", "C": 69.42, "K": 94.1, "est": "dir", "deuda": 4000, "v": {"f": "03/10", "h": "13:43", "met": "Nequi", "tot": 0, "pag": 7000}, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 33, "n": "Angie D.", "d": "Cra 94A # 69-42 Sur (Nueva Ciudad 3)", "C": 69.42, "K": 94.1, "est": "dir", "deuda": 0, "v": null, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 34, "n": "Luz S.", "d": "Cra 94A # 69-42 Sur (Nueva Ciudad 3)", "C": 69.42, "K": 94.1, "est": "dir", "deuda": 9000, "v": {"f": "03/10", "h": "13:45", "met": "Efectivo", "tot": 9000, "pag": 13000}, "p": ["Jabón de Manos x1"], "g": "Conjunto Nueva Ciudad 3"}, {"o": 35, "n": "Paisita", "d": "Cra 94A # 69-42 Sur (Nueva Ciudad 3)", "C": 69.42, "K": 94.1, "est": "dir", "deuda": 36000, "v": {"f": "03/10", "h": "13:46", "met": "Efectivo", "tot": 0, "pag": 10000}, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 36, "n": "Sandra", "d": "Cra 94A # 69-42 Sur (Nueva Ciudad 3)", "C": 69.42, "K": 94.1, "est": "dir", "deuda": 7000, "v": null, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 37, "n": "Jenny", "d": "Cra 94A # 69-42 Sur (Nueva Ciudad 3)", "C": 69.42, "K": 94.1, "est": "dir", "deuda": 9000, "v": {"f": "03/10", "h": "14:02", "met": "Efectivo", "tot": 9000, "pag": 0}, "p": ["Jabón de Manos x1"], "g": "Conjunto Nueva Ciudad 3"}, {"o": 38, "n": "Rosalba", "d": "Cra 94A # 69-42 Sur (Nueva Ciudad 3)", "C": 69.42, "K": 94.1, "est": "dir", "deuda": 25000, "v": {"f": "03/10", "h": "14:03", "met": "Efectivo", "tot": 6000, "pag": 0}, "p": ["Limpiador de pisos x1"], "g": "Conjunto Nueva Ciudad 3"}, {"o": 39, "n": "Leidi", "d": "Cra 94A # 69-42 Sur (Nueva Ciudad 3)", "C": 69.42, "K": 94.1, "est": "dir", "deuda": 0, "v": null, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 40, "n": "Lucía", "d": "Cra 94A # 69-42 Sur (Nueva Ciudad 3)", "C": 69.42, "K": 94.1, "est": "dir", "deuda": 3000, "v": {"f": "03/10", "h": "13:53", "met": "Efectivo", "tot": 0, "pag": 10000}, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 41, "n": "Aldair", "d": "Cra 94A # 69-42 Sur (Nueva Ciudad 3)", "C": 69.42, "K": 94.1, "est": "dir", "deuda": 2000, "v": null, "p": [], "g": "Conjunto Nueva Ciudad 3"}, {"o": 42, "n": "Dayana", "d": "Cra 93D # 69-40 Sur", "C": 69.4, "K": 93.4, "est": "dir", "deuda": 32000, "v": {"f": "03/10", "h": "14:10", "met": "Efectivo", "tot": 33000, "pag": 25000}, "p": ["Jabon De Ropa x1", "Suavizante x1", "Ambientador Spray x1", "Ropa Color x1"], "g": null}, {"o": 43, "n": "Flor", "d": "Cra 93D # 69-40 Sur", "C": 69.4, "K": 93.4, "est": "dir", "deuda": 3000, "v": null, "p": [], "g": null}, {"o": 44, "n": "Paola", "d": "Cll 68 Sur # 91-99", "C": 68.0, "K": 91.99, "est": "dir", "deuda": 20000, "v": {"f": "03/10", "h": "14:14", "met": "Nequi", "tot": 0, "pag": 15000}, "p": [], "g": null}, {"o": 47, "n": "Paisita Ultima", "d": "Cll 69A Sur # 87N-7", "C": 69.25, "K": 87.97, "est": "dir", "deuda": 0, "v": {"f": "03/10", "h": "14:28", "met": "Efectivo", "tot": 0, "pag": 6000}, "p": [], "g": null}, {"o": 48, "n": "Mia", "d": "Cll 69A Sur # 87N-4", "C": 69.25, "K": 87.94, "est": "dir", "deuda": 39000, "v": {"f": "03/10", "h": "14:39", "met": "Efectivo", "tot": 39000, "pag": 0}, "p": ["Jabon De Ropa x1", "Ambientador Spray x1", "Ambientador Spray x2", "Suavizante x1"], "g": null}];
+// ================= red de calles (nomenclatura de Bogotá, 1 número ≈ 100 m) =================
+const C0=60.5, C1=71, K0=87, K1=101, PASO=0.5, UKM=0.1;
+const MAIN_C=[63,66,69], MAIN_K=[88,92,97];
+const Cs=[],Ks=[]; for(let c=C0;c<=C1+1e-9;c+=PASO)Cs.push(+c.toFixed(2)); for(let k=K0;k<=K1+1e-9;k+=PASO)Ks.push(+k.toFixed(2));
+const nC=Cs.length,nK=Ks.length,NN=nC*nK, id=(i,j)=>i*nK+j;
+const X=K=>(K1-K)*10, Y=C=>(C-C0)*10; // 1 unidad = 10 m
+const esEnt=v=>Math.abs(v-Math.round(v))<1e-9;
+const edges=[], adj=Array.from({length:NN},()=>[]), ekey={};
+const clase=(fijo,ent)=>!ent?'pas':(fijo?'main':'norm');
+for(let i=0;i<nC;i++)for(let j=0;j<nK;j++){
+  if(j+1<nK){const c=Cs[i]; add(id(i,j),id(i,j+1),clase(MAIN_C.includes(c),esEnt(c)),esEnt(c)?'Calle '+c+' Sur':'el pasaje de la Calle '+c+' Sur')}
+  if(i+1<nC){const k=Ks[j]; add(id(i,j),id(i+1,j),clase(MAIN_K.includes(k),esEnt(k)),esEnt(k)?'Carrera '+k:'el pasaje de la Carrera '+k)}
+}
+function add(a,b,cl,nom){const e={a,b,cl,nom,len:PASO*UKM,t:false,k:edges.length}; edges.push(e); adj[a].push(e); adj[b].push(e); ekey[Math.min(a,b)+'-'+Math.max(a,b)]=e}
+const nodoXY=n=>[X(Ks[n%nK]),Y(Cs[Math.floor(n/nK)])];
+const VEH={elec:{nom:'Eléctrico',vel:15,f:{main:1,norm:1.6,pas:Infinity}},pedal:{nom:'De pedal',vel:9,f:{main:1.15,norm:1,pas:1}}};
+const F_TRANCON=8, T_ATENCION=3;
+const esConducible=(n,v)=>v==='pedal'||esEnt(Cs[Math.floor(n/nK)])||esEnt(Ks[n%nK]);
+
+// ================= paradas =================
+const paradas=[{id:0,nom:'Bodega',dir:'Cra 87I # 69 Sur-34',C:69.34,K:87.9,cl:[],bodega:true}];
+CLIENTES.forEach(c=>{ const key=c.g||(c.C.toFixed(2)+'|'+c.K.toFixed(2)); let p=paradas.find(p=>p.key===key);
+  if(!p){p={id:paradas.length,key,nom:c.g||c.n,dir:c.d.replace(/\s*\(.*\)/,''),cl:[],C:c.C,K:c.K};paradas.push(p)} p.cl.push(c) });
+paradas.forEach(p=>{ if(p.bodega)return; if(p.cl.length>1&&!p.cl[0].g) p.nom=p.cl.length===2?p.cl[0].n+' y '+p.cl[1].n:p.cl[0].n+' y '+(p.cl.length-1)+' más'; p.ordenApp=Math.min(...p.cl.map(c=>c.o)); p.xy=[X(p.K),Y(p.C)] });
+paradas[0].xy=[X(paradas[0].K),Y(paradas[0].C)];
+
+function nodoCercano(pt,v){ let best=0,bd=1e9; for(let n=0;n<NN;n++){ if(!esConducible(n,v))continue; const q=nodoXY(n), d=Math.hypot(q[0]-pt[0],q[1]-pt[1]); if(d<bd){bd=d;best=n} } return best }
+function dijkstra(src,v){ const f=VEH[v].f, dist=new Float64Array(NN).fill(Infinity), prev=new Int32Array(NN).fill(-1), vis=new Uint8Array(NN); dist[src]=0;
+  for(let it=0;it<NN;it++){ let u=-1,bd=Infinity; for(let w=0;w<NN;w++) if(!vis[w]&&dist[w]<bd){bd=dist[w];u=w} if(u<0)break; vis[u]=1;
+    for(const e of adj[u]){ const c=e.len*f[e.cl]*(e.t?F_TRANCON:1); if(!isFinite(c))continue; const w=e.a===u?e.b:e.a; if(dist[u]+c<dist[w]){dist[w]=dist[u]+c;prev[w]=u} } }
+  return {dist,prev} }
+function caminoNodos(D,src,dst){ const out=[]; let v=dst; while(v!==-1){out.push(v); if(v===src)break; v=D.prev[v]} return out.reverse() }
+
+let veh='elec', modo='opt', cache=null;
+function prepararCostos(){ const acc=paradas.map(p=>nodoCercano(p.xy,veh)); const D=acc.map(n=>dijkstra(n,veh));
+  const costo=(a,b)=>a===b?0:D[a].dist[acc[b]]+0.002; cache={acc,D,costo} }
+function tramo(a,b){ const ns=caminoNodos(cache.D[a],cache.acc[a],cache.acc[b]); return construir([paradas[a].xy,...ns.map(nodoXY),paradas[b].xy],[null,...ns.map((n,i)=>i? ekey[Math.min(n,ns[i-1])+'-'+Math.max(n,ns[i-1])] :null).slice(1),null]) }
+function construir(pts,eds){ // eds[i] = arista del segmento i (pts[i]→pts[i+1])
+  const P=[pts[0]], E=[], cum=[0]; for(let i=1;i<pts.length;i++){ const a=P[P.length-1], b=pts[i], d=Math.hypot(b[0]-a[0],b[1]-a[1]); if(d<1e-6)continue; P.push(b); E.push(eds[i-1]||null); cum.push(cum[cum.length-1]+d) }
+  return {P,E,cum,L:cum[cum.length-1]} }
+function largoKm(ordenIds){ let s=0; const seq=[0,...ordenIds,0]; for(let i=0;i<seq.length-1;i++) s+=tramo(seq[i],seq[i+1]).L; return s/100 }
+function optimizar(pend){ let cur=0, rest=pend.slice(), ord=[];
+  while(rest.length){ let j=0; for(let i=1;i<rest.length;i++) if(cache.costo(cur,rest[i])<cache.costo(cur,rest[j])) j=i; ord.push(rest[j]); cur=rest[j]; rest.splice(j,1) }
+  const tot=o=>{let s=0; const q=[0,...o,0]; for(let i=0;i<q.length-1;i++) s+=cache.costo(q[i],q[i+1]); return s};
+  let mejora=true,g=0; while(mejora&&g++<80){ mejora=false; for(let i=0;i<ord.length-1;i++)for(let k=i+1;k<ord.length;k++){ const n=ord.slice(0,i).concat(ord.slice(i,k+1).reverse(),ord.slice(k+1)); if(tot(n)<tot(ord)-1e-9){ord=n;mejora=true} } }
+  return ord }
+let plan=[], resumenInicio={};
+function planear(){ prepararCostos(); const ids=paradas.filter(p=>!p.bodega).map(p=>p.id);
+  const app=ids.slice().sort((a,b)=>paradas[a].ordenApp-paradas[b].ordenApp), opt=optimizar(ids);
+  const kApp=largoKm(app), kOpt=largoKm(opt); plan=modo==='opt'?opt:app;
+  resumenInicio={kApp,kOpt,km:modo==='opt'?kOpt:kApp} }
+
+// ================= dibujo de mapas =================
+const NS='http://www.w3.org/2000/svg';
+function el(t,a,p){const e=document.createElementNS(NS,t); for(const k in a)e.setAttribute(k,a[k]); p.appendChild(e); return e}
+function base(svg){ svg.innerHTML=''; const W=X(K0)-X(K1),H=Y(C1)-Y(C0);
+  el('rect',{x:-200,y:-200,width:W+400,height:H+400,fill:'var(--map)'},svg);
+  const g=el('g',{},svg);
+  for(let c=Math.ceil(C0);c<C1;c++)for(let k=K0;k<K1;k++) el('rect',{x:X(k+1)+.7,y:Y(c)+.7,width:8.6,height:8.6,rx:1.2,fill:'var(--block)'},g);
+  const ord={pas:0,norm:1,main:2};
+  edges.slice().sort((a,b)=>ord[a.cl]-ord[b.cl]).forEach(e=>{ const [x1,y1]=nodoXY(e.a),[x2,y2]=nodoXY(e.b);
+    if(e.cl==='main') el('line',{x1,y1,x2,y2,stroke:'var(--st-edge)','stroke-width':3,'stroke-linecap':'round'},g);
+    el('line',{x1,y1,x2,y2,stroke:e.cl==='pas'?'var(--st-pas)':'var(--st)','stroke-width':e.cl==='main'?2.2:(e.cl==='norm'?1.3:.7),'stroke-linecap':'round'},g) });
+  const lab=el('g',{'font-family':'Plus Jakarta Sans, sans-serif','font-size':1.9,'font-weight':600,fill:'#8A8F84'},svg);
+  MAIN_C.forEach(c=>{ for(let k=89;k<101;k+=4){ const t=el('text',{x:X(k)+1,y:Y(c)-0.9},lab); t.textContent='Calle '+c+' Sur' } });
+  MAIN_K.forEach(k=>{ for(let c=62;c<71;c+=3){ const t=el('text',{x:X(k)+1,y:Y(c)+3.2,transform:`rotate(90 ${X(k)+1} ${Y(c)+3.2})`},lab); t.textContent='Carrera '+k } });
+  return {capas:el('g',{},svg)} }
+const pts2str=P=>P.map(q=>q[0].toFixed(2)+','+q[1].toFixed(2)).join(' ');
+function marcadorParada(g,p,num,est){ const gg=el('g',{transform:`translate(${p.xy[0]},${p.xy[1]})`},g);
+  if(p.bodega){ el('rect',{x:-2.4,y:-2.4,width:4.8,height:4.8,rx:1,fill:'#17151C',stroke:'#fff','stroke-width':.6},gg); const t=el('text',{y:1.05,'text-anchor':'middle','font-size':2.8,'font-weight':800,fill:'#fff','font-family':'Plus Jakarta Sans, sans-serif'},gg); t.textContent='B'; return }
+  const col=est==='hecha'?'#1E8E4E':est==='actual'?'#D4157F':est==='nadie'?'#7B7986':'#1A73E8';
+  el('circle',{r:2.3,fill:col,stroke:'#fff','stroke-width':.6},gg);
+  const t=el('text',{y:.95,'text-anchor':'middle','font-size':2.5,'font-weight':800,fill:'#fff','font-family':'Plus Jakarta Sans, sans-serif'},gg); t.textContent=est==='hecha'?'✓':(est==='nadie'?'✕':num);
+  if(p.cl.length>1){ el('circle',{cx:2.4,cy:-2.2,r:1.4,fill:'#17151C'},gg); const b=el('text',{x:2.4,y:-1.55,'text-anchor':'middle','font-size':1.8,'font-weight':800,fill:'#fff','font-family':'Plus Jakarta Sans, sans-serif'},gg); b.textContent=p.cl.length } }
+function ajustar(svg,minx,miny,maxx,maxy,pad){ const r=svg.getBoundingClientRect(); const asp=(r.height||400)/(r.width||390); let w=maxx-minx+2*pad, h=maxy-miny+2*pad, x=minx-pad, y=miny-pad;
+  if(h/w>asp){const nw=h/asp; x-=(nw-w)/2; w=nw} else {const nh=w*asp; y-=(nh-h)/2; h=nh} svg.setAttribute('viewBox',`${x} ${y} ${w} ${h}`) }
+
+const svgPrev=document.getElementById('svgPrev'); let prevBase;
+function dibujarInicio(){ prevBase=prevBase||base(svgPrev); const g=prevBase.capas; g.innerHTML='';
+  const seq=[0,...plan,0]; let allP=[];
+  for(let i=0;i<seq.length-1;i++){ const t=tramo(seq[i],seq[i+1]); allP=allP.concat(t.P);
+    el('polyline',{points:pts2str(t.P),fill:'none',stroke:'#fff','stroke-width':2.6,'stroke-linejoin':'round','stroke-linecap':'round'},g);
+    el('polyline',{points:pts2str(t.P),fill:'none',stroke:'#1A73E8','stroke-width':1.5,'stroke-linejoin':'round','stroke-linecap':'round'},g) }
+  marcadorParada(g,paradas[0]); plan.forEach((pid,i)=>marcadorParada(g,paradas[pid],i+1,'pend'));
+  const xs=allP.map(q=>q[0]), ys=allP.map(q=>q[1]); ajustar(svgPrev,Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys),4);
+  const v=VEH[veh], km=resumenInicio.km, min=km/v.vel*60+CLIENTES.length*T_ATENCION;
+  document.getElementById('sKm').textContent=fmt1(km)+' km';
+  document.getElementById('sT').textContent=hm(min);
+  const ah=resumenInicio.kApp-resumenInicio.kOpt;
+  document.getElementById('ahorro').textContent= ah>0.01 ? (modo==='opt' ? `Ahorra ${Math.round(ah*1000)} m frente al orden de siempre (${fmt1(resumenInicio.kApp)} km)` : `El orden optimizado ahorraría ${Math.round(ah*1000)} m`) : 'El orden de siempre ya es el más corto';
+}
+const fmt1=x=>x.toFixed(1).replace('.',','), pesos=n=>'$'+n.toLocaleString('es-CO');
+const hm=m=>{m=Math.round(m); const h=Math.floor(m/60); return h? `${h} h ${String(m%60).padStart(2,'0')} min` : `${m} min`};
+const reloj=d=>{let h=d.getHours(),mi=d.getMinutes(); const s=h>=12?'p. m.':'a. m.'; h=h%12||12; return `${h}:${String(mi).padStart(2,'0')} ${s}`};
+
+// ================= navegación =================
+const svgNav=document.getElementById('svgNav'); let navBase, gTrafico, gRutaAll, gLeg, gStops, gYo;
+let nav=null; // {idx, leg, s, km, playing, factor, siguiendo}
+const estado={}; // id cliente(o) -> 'ok'|'no'
+const objetivo=()=> nav.idx<plan.length ? plan[nav.idx] : 0;
+function iniciar(){ for(const k in estado) delete estado[k]; edges.forEach(e=>e.t=false);
+  document.getElementById('pInicio').hidden=true; document.getElementById('pNav').hidden=false;
+  navBase=base(svgNav); const c=navBase.capas; gTrafico=el('g',{},c); gRutaAll=el('g',{},c); gLeg=el('g',{},c); gStops=el('g',{},c); gYo=el('g',{},c);
+  nav={idx:0, leg:tramo(0,plan[0]), s:0, km:0, playing:true, factor:40, siguiendo:true, t0:performance.now(), simMin:0, desvios:0, trancones:0};
+  pintarRuta(); actualizarHoja(); ultimo=performance.now(); requestAnimationFrame(bucle) }
+function pintarRuta(){ gRutaAll.innerHTML=''; gStops.innerHTML=''; gTrafico.innerHTML='';
+  edges.filter(e=>e.t).forEach(e=>{const [x1,y1]=nodoXY(e.a),[x2,y2]=nodoXY(e.b); el('line',{x1,y1,x2,y2,stroke:'#E53935','stroke-width':2.6,'stroke-linecap':'round'},gTrafico)});
+  const seq=[...plan.slice(nav.idx+1)]; let prev=objetivo();
+  if(nav.idx<plan.length){ [...seq,0].forEach(pid=>{ const t=tramo(prev,pid); el('polyline',{points:pts2str(t.P),fill:'none',stroke:'#8EB6F2','stroke-width':1.3,'stroke-dasharray':'2 1.2','stroke-linecap':'round'},gRutaAll); prev=pid }) }
+  marcadorParada(gStops,paradas[0]);
+  plan.forEach((pid,i)=>{ const p=paradas[pid]; const listo=p.cl.every(c=>estado[c.o]); const nadie=listo&&p.cl.every(c=>estado[c.o]==='no');
+    marcadorParada(gStops,p,i+1, i<nav.idx ? (nadie?'nadie':'hecha') : (i===nav.idx?'actual':'pend')) });
+  gLeg.innerHTML=''; el('polyline',{points:pts2str(nav.leg.P),fill:'none',stroke:'#fff','stroke-width':3.2,'stroke-linejoin':'round','stroke-linecap':'round'},gLeg);
+  el('polyline',{points:pts2str(nav.leg.P),fill:'none',stroke:'#1A73E8','stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},gLeg) }
+function posEn(leg,s){ s=Math.max(0,Math.min(leg.L,s)); let i=0; while(i<leg.cum.length-2&&leg.cum[i+1]<s)i++; const a=leg.P[i],b=leg.P[i+1]||a, seg=(leg.cum[i+1]-leg.cum[i])||1, t=(s-leg.cum[i])/seg;
+  return {x:a[0]+(b[0]-a[0])*t, y:a[1]+(b[1]-a[1])*t, ang:Math.atan2(b[1]-a[1],b[0]-a[0]), i} }
+function pintarYo(p){ gYo.innerHTML=''; const g=el('g',{transform:`translate(${p.x},${p.y}) rotate(${p.ang*180/Math.PI+90})`},gYo);
+  el('path',{d:'M0 0 L-4 -9 L4 -9 Z',fill:'#D4157F','fill-opacity':.18},g);
+  el('circle',{r:2.6,fill:'#D4157F',stroke:'#fff','stroke-width':.9},g); el('path',{d:'M0 -1.6 L1.3 1.3 L0 .6 L-1.3 1.3 Z',fill:'#fff'},g) }
+function camara(p){ const r=svgNav.getBoundingClientRect(); const asp=(r.height||800)/(r.width||390);
+  if(nav.siguiendo){ const w=52,h=w*asp; svgNav.setAttribute('viewBox',`${p.x-w/2} ${p.y-h*0.58} ${w} ${h}`) }
+  else { const allP=[...nav.leg.P]; [0,...plan].forEach(pid=>allP.push(paradas[pid].xy)); const xs=allP.map(q=>q[0]),ys=allP.map(q=>q[1]); ajustar(svgNav,Math.min(...xs),Math.min(...ys)-6,Math.max(...xs),Math.max(...ys)+18,4) } }
+let ultimo=0;
+function bucle(t){ if(!nav) return; const dt=Math.min(100,t-ultimo); ultimo=t;
+  if(nav.playing && !nav.llegando){ const v=VEH[veh].vel; const du=v/3.6e6*dt*nav.factor*100; // unidades (10 m) recorridas
+    nav.s+=du; nav.km+=du/100; nav.simMin+=dt*nav.factor/60000;
+    if(nav.s>=nav.leg.L){ nav.s=nav.leg.L; if(!nav.desviando) llegar() } }
+  const p=posEn(nav.leg,nav.s); pintarYo(p); camara(p); indicaciones(p); actualizarHoja(true);
+  requestAnimationFrame(bucle) }
+function indicaciones(p){ const leg=nav.leg, i=p.i, E=leg.E; const cur=E[i]?E[i].nom:null;
+  let j=i+1; while(j<E.length&&(!E[j]||(cur&&E[j].nom===cur)))j++;
+  const restoLeg=leg.L-nav.s, fl=document.getElementById('flecha');
+  const nomP=objetivo()===0?'la bodega':paradas[objetivo()].nom;
+  if(j<E.length&&E[j]&&cur){ const d=(leg.cum[j]-nav.s)*10; const a=leg.P[j-1],b=leg.P[j],c=leg.P[j+1]; const cr=(b[0]-a[0])*(c[1]-b[1])-(b[1]-a[1])*(c[0]-b[0]); const der=cr>0;
+    setTxt('iTit', d<25?`Gira a la ${der?'derecha':'izquierda'}`:`Sigue por la ${cur}`); setTxt('iSub', `${d<25?'ahora':'En '+redondeo(d)+' m'} gira a la ${der?'derecha':'izquierda'} en la ${E[j].nom}`); flecha(fl, d<25?(der?'der':'izq'):'rec') }
+  else if(cur){ setTxt('iTit',`Sigue por la ${cur}`); setTxt('iSub',`${redondeo(restoLeg*10)} m hasta ${nomP}`); flecha(fl,'rec') }
+  else { setTxt('iTit', restoLeg*10<40?`Llegando a ${nomP}`:'Sal a la vía'); setTxt('iSub', `${redondeo(restoLeg*10)} m`); flecha(fl,'rec') } }
+const redondeo=m=>m<100?Math.max(10,Math.round(m/10)*10):Math.round(m/50)*50;
+let flechaAct=''; function flecha(svg,tipo){ if(flechaAct===tipo)return; flechaAct=tipo; svg.innerHTML='';
+  const d=tipo==='rec'?'M20 34V8M20 8l-9 9M20 8l9 9':tipo==='der'?'M12 34V20q0-6 6-6h12M24 8l7 6-7 6':'M28 34V20q0-6-6-6H10M16 8l-7 6 7 6';
+  el('path',{d,fill:'none',stroke:'#fff','stroke-width':4,'stroke-linecap':'round','stroke-linejoin':'round'},svg) }
+const setTxt=(i,t)=>{const e=document.getElementById(i); if(e.textContent!==t)e.textContent=t};
+function actualizarHoja(rapido){ const pid=objetivo(), p=paradas[pid], v=VEH[veh];
+  const resto=nav.leg.L-nav.s; let futuro=0; let prev=pid; plan.slice(nav.idx+1).concat([0]).forEach(q=>{ if(nav.idx>=plan.length)return; futuro+=tramo(prev,q).L; prev=q });
+  const minTramo=resto/100/v.vel*60; const pendCli=CLIENTES.filter(c=>!estado[c.o]).length;
+  const minTotal=(resto+futuro)/100/v.vel*60+pendCli*T_ATENCION;
+  setTxt('hEt', pid===0?'Regreso':'Siguiente parada'); setTxt('hNom', pid===0?'Bodega':p.nom);
+  setTxt('hDir', pid===0?paradas[0].dir:(p.cl.length>1?`${p.cl.length} clientes · ${p.dir}`:p.dir));
+  setTxt('hMin', Math.max(1,Math.round(minTramo))+' min'); setTxt('hM', redondeo(resto*10)+' m');
+  const hechas=nav.idx; document.getElementById('hBar').style.width=(hechas/plan.length*100)+'%';
+  const fin=new Date(Date.now()+minTotal*60000);
+  setTxt('hMeta', `Parada ${Math.min(nav.idx+1,plan.length)} de ${plan.length} · vuelta a la bodega ≈ ${reloj(fin)}`) }
+function llegar(){ nav.llegando=true; const pid=objetivo();
+  if(pid===0){ terminar(); return }
+  abrirLlegada(pid) }
+function abrirLlegada(pid){ const p=paradas[pid]; document.getElementById('velo').hidden=false; const L=document.getElementById('llegada'); L.hidden=false;
+  document.getElementById('lTit').textContent='Llegaste a '+p.nom; pintarLlegada(pid); setTimeout(()=>document.getElementById('bSig').focus(),50) }
+function pintarLlegada(pid){ const p=paradas[pid]; const ok=p.cl.filter(c=>estado[c.o]==='ok').length, no=p.cl.filter(c=>estado[c.o]==='no').length;
+  document.getElementById('lSub').textContent=`${p.dir} · ${p.cl.length} ${p.cl.length>1?'clientes':'cliente'}`+(ok||no?` · ${ok} atendidos · ${no} no estaban`:'');
+  const box=document.getElementById('lCli'); box.innerHTML='';
+  p.cl.forEach(c=>{ const d=document.createElement('div'); d.className='cli'; const e=estado[c.o];
+    d.innerHTML=`<div class="nm"><b>${esc(c.n)}</b><span class="${c.deuda?'debe':''}">${c.deuda?'Debe '+pesos(c.deuda):'Al día'}${c.v?' · última compra '+c.v.f:''}</span></div>`+
+      (e? `<span class="pill ${e}">${e==='ok'?'Atendido':'No estaba'}</span><button class="deshacer" data-u="${c.o}">Deshacer</button>`
+        : `<button class="ico ok" data-ok="${c.o}" aria-label="Atendido: ${esc(c.n)}"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button class="ico no" data-no="${c.o}" aria-label="No estaba: ${esc(c.n)}"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg></button><button class="ven" data-v="${c.o}">Venta</button>`);
+    box.appendChild(d) });
+  const pend=p.cl.filter(c=>!estado[c.o]).length; const b=document.getElementById('bSig');
+  b.textContent= pend? `Seguir sin marcar ${pend===1?'a 1 cliente':'a '+pend+' clientes'}` : (nav.idx+1<plan.length?'Siguiente parada':'Volver a la bodega');
+  b.className=pend?'b2':'b1'; b.style.height='54px' }
+document.getElementById('lCli').addEventListener('click',ev=>{ const b=ev.target.closest('button'); if(!b)return; const pid=objetivo();
+  if(b.dataset.v){ toast('Aquí se abre Registrar venta, la misma pantalla de siempre.'); estado[+b.dataset.v]='ok' }
+  else if(b.dataset.ok) estado[+b.dataset.ok]='ok'; else if(b.dataset.no) estado[+b.dataset.no]='no'; else if(b.dataset.u) delete estado[+b.dataset.u];
+  pintarLlegada(pid) });
+document.getElementById('bSig').onclick=()=>{ const pid=objetivo(); document.getElementById('llegada').hidden=true; document.getElementById('velo').hidden=true;
+  nav.idx++; const dest=objetivo(); nav.leg=tramo(pid,dest); nav.s=0; nav.llegando=false; nav.siguiendo=true; marcarVista(); pintarRuta() };
+document.getElementById('bLlegue').onclick=()=>{ nav.km+=Math.max(0,nav.leg.L-nav.s)/100; nav.s=nav.leg.L; llegar() };
+document.getElementById('bGmaps').onclick=()=>toast('En el celular abre Google Maps con la dirección de esta parada.');
+
+// ---- desvío y trancón ----
+function avisar(tipo,tit,sub,ms){ const a=document.getElementById('aviso'); a.className='aviso '+tipo; a.hidden=false; setTxt('aTit',tit); setTxt('aSub',sub); clearTimeout(avisar.t); avisar.t=setTimeout(()=>a.hidden=true,ms||3200) }
+function recalcularDesde(pt){ const n0=nodoCercano(pt,veh), dest=objetivo(), D=dijkstra(n0,veh); const destN=cache.acc[dest];
+  const ns=caminoNodos(D,n0,destN); const eds=[null]; for(let i=1;i<ns.length;i++) eds.push(ekey[Math.min(ns[i],ns[i-1])+'-'+Math.max(ns[i],ns[i-1])]); eds.push(null);
+  nav.leg=construir([pt,...ns.map(nodoXY),paradas[dest].xy],eds); nav.s=0; pintarRuta() }
+document.getElementById('mDesvio').onclick=()=>{ cerrarMenu(); if(nav.llegando)return; const p=posEn(nav.leg,nav.s);
+  const off=[p.x+Math.cos(p.ang+Math.PI/2)*7+Math.cos(p.ang)*4, p.y+Math.sin(p.ang+Math.PI/2)*7+Math.sin(p.ang)*4];
+  nav.leg=construir([[p.x,p.y],off],[null]); nav.s=0; nav.desvios++; pintarRuta(); nav.playing=true; nav.desviando=true;
+  avisar('nar','Te saliste de la ruta','Recalculando por calles reales…',2400);
+  setTimeout(()=>{ if(!nav)return; const q=posEn(nav.leg,nav.s); nav.desviando=false; recalcularDesde([q.x,q.y]); const n=nav.leg.E.find(e=>e); avisar('nar','Ruta nueva',n?'Sigue por la '+n.nom:'Vuelve a la vía',2600) },1300) };
+document.getElementById('mTrancon').onclick=()=>{ cerrarMenu(); if(nav.llegando)return; const p=posEn(nav.leg,nav.s);
+  const prox=nav.leg.E.slice(p.i+2).find(e=>e&&e.cl!=='pas'); if(!prox){ toast('No hay calles adelante en este tramo para simular un trancón.'); return }
+  const misma=edges.filter(e=>e.nom===prox.nom); const k=misma.indexOf(prox); misma.slice(Math.max(0,k-1),k+3).forEach(e=>e.t=true);
+  nav.trancones++; prepararCostos(); recalcularDesde([p.x,p.y]); avisar('rojo','Trancón en la '+prox.nom,'Tomando otra ruta para esquivarlo',3400) };
+document.getElementById('mVel').onclick=()=>{ const f=[10,40,120]; nav.factor=f[(f.indexOf(nav.factor)+1)%f.length]; setTxt('mVel','Velocidad de la simulación: x'+nav.factor) };
+document.getElementById('mSalir').onclick=()=>{ cerrarMenu(); terminar(true) };
+const menu=document.getElementById('menu'), bMenu=document.getElementById('bMenu');
+bMenu.onclick=()=>{ menu.hidden=!menu.hidden; bMenu.setAttribute('aria-expanded',!menu.hidden); bMenu.classList.toggle('on',!menu.hidden) };
+function cerrarMenu(){ menu.hidden=true; bMenu.setAttribute('aria-expanded','false'); bMenu.classList.remove('on') }
+document.getElementById('bPausa').onclick=()=>{ nav.playing=!nav.playing; const ic=document.getElementById('icPausa');
+  ic.innerHTML=nav.playing?'<rect x="5" y="4" width="3.5" height="12" rx="1" fill="currentColor"/><rect x="11.5" y="4" width="3.5" height="12" rx="1" fill="currentColor"/>':'<path d="M6 4l10 6-10 6z" fill="currentColor"/>';
+  document.getElementById('bPausa').setAttribute('aria-label',nav.playing?'Pausar':'Continuar') };
+function marcarVista(){ document.getElementById('bVista').classList.toggle('on',!nav.siguiendo); document.getElementById('bVista').setAttribute('aria-label',nav.siguiendo?'Ver toda la ruta':'Seguir al vendedor') }
+document.getElementById('bVista').onclick=()=>{ nav.siguiendo=!nav.siguiendo; marcarVista() };
+
+function terminar(antes){ const r=document.getElementById('resumen'); r.hidden=false; nav.playing=false; const n=nav; nav=null;
+  const ok=CLIENTES.filter(c=>estado[c.o]==='ok').length, no=CLIENTES.filter(c=>estado[c.o]==='no').length;
+  document.getElementById('rKm').textContent=fmt1(n.km)+' km';
+  document.getElementById('rStats').innerHTML=`<div class="st"><b>${ok}</b><span>atendidos</span></div><div class="st"><b>${no}</b><span>no estaban</span></div><div class="st"><b>${CLIENTES.length-ok-no}</b><span>sin marcar</span></div>`;
+  document.getElementById('rDet').innerHTML=`<div class="fila2"><span>Tiempo en movimiento</span><b>${hm(n.km/VEH[veh].vel*60)}</b></div><div class="fila2"><span>Triciclo</span><b>${VEH[veh].nom}</b></div><div class="fila2"><span>Desvíos recalculados</span><b>${n.desvios}</b></div><div class="fila2"><span>Trancones esquivados</span><b>${n.trancones}</b></div>`+(antes?'<p style="font-size:13px;color:var(--mut)">La ruta se terminó antes de volver a la bodega.</p>':'') }
+document.getElementById('bVolver').onclick=()=>{ document.getElementById('resumen').hidden=true; document.getElementById('pNav').hidden=true; document.getElementById('pInicio').hidden=false; edges.forEach(e=>e.t=false); planear(); dibujarInicio(); listaClientes() };
+
+// ================= inicio, clientes, ficha =================
+function setVeh(v){ veh=v; ['vElec','vPedal'].forEach(i=>document.getElementById(i).setAttribute('aria-pressed',(i==='vElec')===(v==='elec'))); planear(); dibujarInicio() }
+function setModo(m){ modo=m; document.getElementById('oOpt').setAttribute('aria-pressed',m==='opt'); document.getElementById('oApp').setAttribute('aria-pressed',m==='app'); planear(); dibujarInicio() }
+document.getElementById('vElec').onclick=()=>setVeh('elec'); document.getElementById('vPedal').onclick=()=>setVeh('pedal');
+document.getElementById('oOpt').onclick=()=>setModo('opt'); document.getElementById('oApp').onclick=()=>setModo('app');
+document.getElementById('bIniciar').onclick=iniciar;
+function tab(r){ document.getElementById('tRuta').setAttribute('aria-selected',r); document.getElementById('tCli').setAttribute('aria-selected',!r);
+  document.getElementById('cuerpoRuta').hidden=!r; document.getElementById('cuerpoCli').hidden=r; document.getElementById('bIniciar').hidden=!r }
+document.getElementById('tRuta').onclick=()=>tab(true); document.getElementById('tCli').onclick=()=>tab(false);
+function listaClientes(){ const q=document.getElementById('q').value.trim().toLowerCase(); const ul=document.getElementById('listaCli'); ul.innerHTML='';
+  CLIENTES.filter(c=>!q||(c.n+' '+c.d).toLowerCase().includes(q)).forEach(c=>{ const li=document.createElement('li');
+    li.innerHTML=`<button class="fila"><span class="av">${esc(c.n.split(' ').map(w=>w[0]).slice(0,2).join(''))}</span><span class="nm"><b>${esc(c.n)}</b><span>${esc(c.d.replace(/\s*\(.*\)/,''))}</span></span><span class="monto ${c.deuda?'debe':'dia'}">${c.deuda?pesos(c.deuda):'Al día'}</span></button>`;
+    li.firstChild.onclick=()=>abrirFicha(c); ul.appendChild(li) }) }
+document.getElementById('q').addEventListener('input',listaClientes);
+function abrirFicha(c){ const f=document.getElementById('ficha'); f.hidden=false; document.getElementById('fTit').textContent=c.n; document.getElementById('fSub').textContent=c.d;
+  const v=c.v; document.getElementById('fCuerpo').innerHTML=`<div class="fila2"><span>Deuda</span><b style="color:${c.deuda?'var(--red)':'var(--ok)'}">${c.deuda?pesos(c.deuda):'Al día'}</b></div><div class="fila2"><span>Última compra</span><b>${v?(v.tot?v.f+' · compró '+pesos(v.tot):v.f+' · abonó '+pesos(v.pag)):'Sin compras recientes'}</b></div><div class="fila2"><span>Productos</span><b style="text-align:right">${c.p&&c.p.length?esc(c.p.join(', ')):'—'}</b></div><div class="fila2"><span>Puesto en la ruta</span><b>${c.o}</b></div>`;
+  document.getElementById('fX').focus() }
+document.getElementById('fX').onclick=()=>document.getElementById('ficha').hidden=true;
+let tt; function toast(t){ const a=document.getElementById('toast'); a.textContent=t; a.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>a.classList.remove('on'),2600) }
+const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+
+document.getElementById('sCli').textContent=CLIENTES.length; planear(); requestAnimationFrame(()=>{ dibujarInicio(); listaClientes() });
+window.addEventListener('resize',()=>{ if(document.getElementById('pInicio').hidden===false) dibujarInicio() });
+</script>
